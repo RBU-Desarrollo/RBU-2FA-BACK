@@ -46,7 +46,7 @@ export const GET = async (req: Request, res: Response) => {
       verificationCode
     });
 
-    res.status(200).json(formattedUser);
+    res.status(200).json({ codigoUsuario: formattedUser.codigoUsuario });
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: 'Internal Server Error' });
