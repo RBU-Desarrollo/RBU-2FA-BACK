@@ -35,6 +35,26 @@ Una vez rellenadas las variables de entorno, ejecuta
   pnpm dev
 ```
 
+## Estructura de rutas
+
+Para un mejor entendimiento y comprensión de las rutas se estableció el siguiente sistema:
+
+Si una ruta es `/api/auth` y otra es `/api/auth/otp`, se estructura los controladores y rutas de la siguiente manera:
+
+```bash
+  * controllers
+    * auth
+      * otp
+        * controller.ts (otp controller)
+      * controller.ts (auth controller)
+```
+
+```bash
+  * routes
+    * auth.ts
+    * otp.ts
+```
+
 ## Rutas de API
 
 ### Probar conexión
