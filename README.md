@@ -12,10 +12,13 @@ Para correr el proyecto, necesitarás de las siguientes variables de entorno en 
 
 `PORT`
 
+`EMAIL_API_ENDPOINT`
+
 `DB_USER`
 `DB_PASSWORD`
 `DB_SERVER`
 `DB_DATABASE`
+`DB_PORT`
 
 ## Instalación y ejecución
 
