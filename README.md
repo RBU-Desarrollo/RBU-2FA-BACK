@@ -34,26 +34,34 @@ Una vez rellenadas las variables de entorno, ejecuta
 
 ## Rutas de API
 
-#### Get all items
+### Probar conexión
+
+#### Probar conexión a la base de datos
 
 ```http
-  GET /api/items
+  GET /api/test-connection
 ```
 
-| Parameter | Type     | Description                |
-| :-------- | :------- | :------------------------- |
-| `api_key` | `string` | **Required**. Your API key |
+### Auth
 
-#### Get item
+#### Iniciar sesión (usuario y contraseña)
 
 ```http
-  GET /api/items/${id}
+  GET /api/auth
 ```
 
-| Parameter | Type     | Description                       |
-| :-------- | :------- | :-------------------------------- |
-| `id`      | `string` | **Required**. Id of item to fetch |
+| Parameter  | Type     | Description                         |
+| :--------- | :------- | :---------------------------------- |
+| `username` | `string` | **Required**. Nombre de usuario     |
+| `password` | `string` | **Required**. Contraseña encriptada |
 
-#### add(num1, num2)
+#### Crear usuario (TEMPORAL)
 
-Takes two numbers and returns the sum.
+```http
+  POST /api/auth
+```
+
+| Parameter  | Type     | Description                     |
+| :--------- | :------- | :------------------------------ |
+| `username` | `string` | **Required**. Nombre de usuario |
+| `password` | `string` | **Required**. Contraseña        |
