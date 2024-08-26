@@ -6,6 +6,8 @@ config({ path: envFile });
 
 export const PORT = process.env.PORT || 4000;
 
+export const EMAIL_API_ENDPOINT = process.env.EMAIL_API_ENDPOINT as string;
+
 export const DB_USER = process.env.DB_USER as string;
 export const DB_PASSWORD = process.env.DB_PASSWORD as string;
 export const DB_SERVER = process.env.DB_SERVER as string;
