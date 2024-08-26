@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { testDatabaseConnection } from '../controllers/test-connection';
+import { testDatabaseConnection } from '../controllers/test-connection/controller';
 
 const router = Router();
 

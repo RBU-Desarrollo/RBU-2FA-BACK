@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { isDBConnected } from '../database/connect';
+import { isDBConnected } from '../../services/database/connect';
 
 export const testDatabaseConnection = async (req: Request, res: Response) => {
   try {

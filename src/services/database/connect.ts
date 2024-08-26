@@ -1,5 +1,5 @@
 import { ConnectionPool } from 'mssql';
-import dbConfig from '../config/db';
+import dbConfig from '../../config/db';
 
 let pool: ConnectionPool | null = null;
 
