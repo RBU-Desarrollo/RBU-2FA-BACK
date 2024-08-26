@@ -19,7 +19,7 @@ export const GET = async (req: Request, res: Response) => {
       .request()
       .input('username', username)
       .query(
-        'SELECT TOP 1 codigo_usuario, rut, contraseña, primer_nombre, apellido_paterno, correo_electronico FROM dbo.adm_usuarios WHERE rut = @username'
+        'SELECT TOP 1 codigo_usuario, contraseña, primer_nombre, apellido_paterno, correo_electronico FROM dbo.adm_usuarios WHERE rut = @username'
       );
 
     if (result.recordset.length === 0)
