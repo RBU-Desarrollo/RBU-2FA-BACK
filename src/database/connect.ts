@@ -15,3 +15,14 @@ export const connectDB = async () => {
   }
   return pool;
 };
+
+export const isDBConnected = async (): Promise<boolean> => {
+  try {
+    const pool = await connectDB();
+    await pool.request().query('SELECT 1');
+    return true;
+  } catch (error) {
+    console.error('Error checking database connection:', error);
+    return false;
+  }
+};
