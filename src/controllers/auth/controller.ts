@@ -79,7 +79,7 @@ export const POST = async (req: Request, res: Response) => {
     const pool = await connectDB();
     await pool
       .request()
-      .input('username', sql.VarChar(10), username)
+      .input('username', sql.VarChar(50), username)
       .input('password', sql.VarChar(72), hashedPassword)
       .input('primerNombre', sql.VarChar(50), 'Maximiliano')
       .input('segundoNombre', sql.VarChar(50), 'Andrée')

@@ -5,6 +5,7 @@ import authRouter from './routes/auth';
 import otpRouter from './routes/otp';
 import tokenRouter from './routes/token';
 import usersRouter from './routes/users';
+import systemsRouter from './routes/systems';
 
 const app = express();
 
@@ -18,5 +19,6 @@ app.use('/api', authRouter);
 app.use('/api', otpRouter);
 app.use('/api', tokenRouter);
 app.use('/api', usersRouter);
+app.use('/api', systemsRouter);
 
 export default app;

@@ -9,7 +9,7 @@ export const getUserLogin = async ({
 }) => {
   const result = await pool
     .request()
-    .input('username', sql.VarChar(10), values.username)
+    .input('username', sql.VarChar(50), values.username)
     .execute('fa_procGetUserLogin');
 
   return result;
