@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import { verifyToken } from '../../../lib/jwt';
+import { JwtPayload } from 'jsonwebtoken';
 
 // Validate if user's token is correct
 export const GET = async (req: Request, res: Response) => {
@@ -8,10 +9,12 @@ export const GET = async (req: Request, res: Response) => {
 
     if (!token) return res.status(400).json({ message: 'Missing token' });
 
-    const verifiedToken = verifyToken(token);
-    console.log(verifiedToken, 'verifiedToken');
+    const verifiedToken = verifyToken(token) as JwtPayload;
 
-    return res.status(200).json({ validated: true });
+    if (!verifiedToken)
+      return res.status(401).json({ message: 'Invalid token' });
+
+    return res.status(200).json({ idUsuario: verifiedToken.idUsuario });
   } catch (error) {
     console.log(error);
     return res.status(500).json({ message: 'Internal server error' });
