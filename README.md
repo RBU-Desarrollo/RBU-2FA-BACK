@@ -67,7 +67,7 @@ Si una ruta es `/api/auth` y otra es `/api/auth/otp`, se estructura los controla
     * auth
       * otp
         * controller.ts (otp controller)
-   Indi   * controller.ts (auth controller)
+      * controller.ts (auth controller)
 ```
 
 ```bash
