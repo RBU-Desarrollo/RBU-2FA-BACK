@@ -39,6 +39,8 @@ Para correr el proyecto, necesitarás de las siguientes variables de entorno en 
 `DB_DATABASE`
 `DB_PORT`
 
+`JWT_SECRET`
+
 ## Instalación y ejecución
 
 Instala los módulos del proyecto con `pnpm`
