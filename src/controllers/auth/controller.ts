@@ -5,10 +5,8 @@ import { comparePasswords, hashPassword } from '../../lib/bcrypt';
 import { generateVerificationCode } from '../../utils/generators';
 import { formatObjectToCamelCase } from '../../utils/formatters';
 import { sendVerificationCodeEmail } from '../../services/email/auth';
-import {
-  getUserLoginFromDatabase,
-  insOTPCodeToDatabase
-} from '../../services/auth';
+import { getUserLogin } from '../../services/auth';
+import { insOTPCode } from '../../services/otp';
 
 // Login user with username and password
 export const GET = async (req: Request, res: Response) => {
@@ -22,7 +20,7 @@ export const GET = async (req: Request, res: Response) => {
       return res.status(400).send('Username and password are required');
 
     const pool = await connectDB();
-    const userResult = await getUserLoginFromDatabase({
+    const userResult = await getUserLogin({
       pool,
       values: { username }
     });
@@ -44,7 +42,7 @@ export const GET = async (req: Request, res: Response) => {
     delete formattedUser.hashedPassword;
     const verificationCode = generateVerificationCode();
 
-    const otpResult = await insOTPCodeToDatabase({
+    const otpResult = await insOTPCode({
       pool,
       values: { idUsuario: formattedUser.idUsuario, otp: verificationCode }
     });
@@ -67,6 +65,8 @@ export const GET = async (req: Request, res: Response) => {
 
 //! TEMPORARY
 //! Create user with username and password
+//! The system should not be able to create a user
+//! However, for testing purposes, this endpoint is available
 export const POST = async (req: Request, res: Response) => {
   try {
     const { username, password } = req.body;

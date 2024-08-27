@@ -1,6 +1,6 @@
 import sql, { ConnectionPool } from 'mssql';
 
-export const getUserLoginFromDatabase = async ({
+export const getUserLogin = async ({
   pool,
   values
 }: {
@@ -15,18 +15,17 @@ export const getUserLoginFromDatabase = async ({
   return result;
 };
 
-export const insOTPCodeToDatabase = async ({
+export const getUserById = async ({
   pool,
   values
 }: {
   pool: ConnectionPool;
-  values: { idUsuario: number; otp: number };
+  values: { idUsuario: number };
 }) => {
   const result = await pool
     .request()
-    .input('idUsuario', sql.Int, values.idUsuario)
-    .input('otp', sql.Int, values.otp)
-    .execute('fa_procInsOTP');
+    .input('id_usuario', sql.Int, values.idUsuario)
+    .execute('fa_procGetUserById');
 
   return result;
 };
