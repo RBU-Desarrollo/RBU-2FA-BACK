@@ -3,25 +3,28 @@ import { sendEmail } from './email';
 
 type SendVerificationCodeEmailValues = Pick<EmailValues, 'to'> & {
   name: string;
-  verificationCode: number;
+  correo: string;
+  token: number;
 };
 
-export const sendVerificationCodeEmail = async ({
+export const sendRecoveryLink = async ({
   to,
   name,
-  verificationCode
+  correo,
+  token
 }: SendVerificationCodeEmailValues): Promise<boolean> => {
   try {
     const isEmailSent = await sendEmail({
       from: 'mrs@rbu.cl',
       to,
-      subject: 'Código de verificación',
+      subject: 'Recupera tu contraseña',
       attachments: [],
       properties: {
         nombre: name,
-        codigoVerificacion: verificationCode
+        correo,
+        token
       },
-      endpoint: '/2fa/verificationCode'
+      endpoint: '/2fa/passwordRecovery'
     });
 
     return isEmailSent;

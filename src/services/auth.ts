@@ -29,3 +29,18 @@ export const getUserById = async ({
 
   return result;
 };
+
+export const getUserByEmail = async ({
+  pool,
+  values
+}: {
+  pool: ConnectionPool;
+  values: { correo: string };
+}) => {
+  const result = await pool
+    .request()
+    .input('correo', sql.VarChar(50), values.correo)
+    .execute('fa_procGetUserByEmail');
+
+  return result;
+};
