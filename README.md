@@ -67,6 +67,8 @@ Si una ruta es `/api/auth` y otra es `/api/auth/otp`, se estructura los controla
     * auth
       * otp
         * controller.ts (otp controller)
+      * token
+        * controller.ts (token controller)
       * controller.ts (auth controller)
 ```
 
@@ -74,6 +76,7 @@ Si una ruta es `/api/auth` y otra es `/api/auth/otp`, se estructura los controla
   * routes
     * auth.ts
     * otp.ts
+    * token.ts
 ```
 
 ## Rutas de API
