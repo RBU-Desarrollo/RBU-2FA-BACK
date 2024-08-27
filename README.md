@@ -88,3 +88,28 @@ Si una ruta es `/api/auth` y otra es `/api/auth/otp`, se estructura los controla
 | :--------- | :------- | :------------------------------ |
 | `username` | `string` | **Required**. Nombre de usuario |
 | `password` | `string` | **Required**. Contraseña        |
+
+### OTP
+
+#### Validar usuario y OTP, genera token
+
+```http
+  GET /api/auth/otp
+```
+
+| Parameter   | Type     | Description                                       |
+| :---------- | :------- | :------------------------------------------------ |
+| `idUsuario` | `number` | **Required**. ID de usuario                       |
+| `otp`       | `number` | **Required**. Código de verificación de 6 dígitos |
+
+### Token
+
+#### Validar token
+
+```http
+  GET /api/auth/token
+```
+
+| Parameter | Type     | Description         |
+| :-------- | :------- | :------------------ |
+| `token`   | `string` | **Required**. Token |

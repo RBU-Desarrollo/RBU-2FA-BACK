@@ -3,8 +3,9 @@ import { getUserById } from '../../../services/auth';
 import { connectDB } from '../../../services/database/connect';
 import { formatObjectToCamelCase } from '../../../utils/formatters';
 import { delOTPCode, getOTPCode } from '../../../services/otp';
+import { generateToken } from '../../../lib/jwt';
 
-// Validate if the OTP and the user are correct, then send the user data
+// Validate if the OTP and the user are correct, then send the user data and token
 export const GET = async (req: Request, res: Response) => {
   try {
     const { idUsuario, otp } = req.query;
@@ -40,7 +41,9 @@ export const GET = async (req: Request, res: Response) => {
     if (!isOTPDeleted)
       return res.status(500).json({ message: 'Internal server error' });
 
-    return res.status(200).json({ user });
+    const token = generateToken(user.idUsuario);
+
+    return res.status(200).json({ user, token });
   } catch (error) {
     console.log(error);
     return res.status(500).json({ message: 'Internal server error' });
