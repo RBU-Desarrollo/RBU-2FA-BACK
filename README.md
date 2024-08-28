@@ -24,6 +24,10 @@ API para el sistema de 2FA, construída con Node, Typescript y Express
       - [Obtener data del usuario según ID](#obtener-data-del-usuario-según-id)
     - [Sistemas](#sistemas)
       - [Obtener todos los sistemas](#obtener-todos-los-sistemas)
+    - [Recuperación de contraseña](#recuperación-de-contraseña)
+      - [Verificar que el usuario haya solicitado la recuperación](#verificar-que-el-usuario-haya-solicitado-la-recuperación)
+      - [Crea una instancia de recuperación](#crea-una-instancia-de-recuperación)
+      - [Cambia la contraseña del usuario y elimina la instancia de recuperación](#cambia-la-contraseña-del-usuario-y-elimina-la-instancia-de-recuperación)
 
 ## Stack de tecnologías
 
@@ -161,3 +165,37 @@ Si una ruta es `/api/auth` y otra es `/api/auth/otp`, se estructura los controla
 ```http
   GET /api/systems
 ```
+
+### Recuperación de contraseña
+
+#### Verificar que el usuario haya solicitado la recuperación
+
+```http
+  GET /api/recover-password
+```
+
+| Parameter | Type     | Description                                  |
+| :-------- | :------- | :------------------------------------------- |
+| `token`   | `number` | **Required**. Token de recuperación          |
+| `correo`  | `string` | **Required**. Correo electrónico del usuario |
+
+#### Crea una instancia de recuperación
+
+```http
+  POST /api/recover-password
+```
+
+| Parameter | Type     | Description                                  |
+| :-------- | :------- | :------------------------------------------- |
+| `correo`  | `string` | **Required**. Correo electrónico del usuario |
+
+#### Cambia la contraseña del usuario y elimina la instancia de recuperación
+
+```http
+  PUT /api/recover-password
+```
+
+| Parameter   | Type     | Description                                                |
+| :---------- | :------- | :--------------------------------------------------------- |
+| `idUsuario` | `number` | **Required**. ID de usuario                                |
+| `password`  | `string` | **Required**. Nueva contraseña (sin encriptar) del usuario |
