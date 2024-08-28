@@ -2,7 +2,7 @@ import jwt from 'jsonwebtoken';
 import { JWT_SECRET } from '../config/env';
 
 export const generateToken = (idUsuario: number) => {
-  return jwt.sign({ idUsuario }, JWT_SECRET, { expiresIn: '1d' });
+  return jwt.sign({ idUsuario }, JWT_SECRET, { expiresIn: '8h' });
 };
 
 export const verifyToken = (token: string) => {
