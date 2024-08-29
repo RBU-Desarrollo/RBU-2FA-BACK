@@ -4,6 +4,7 @@ export type Perfil = {
 };
 
 export type Acceso = {
+  idSistema?: number;
   idModulo?: number;
   idAcceso: number;
   nombre: string;

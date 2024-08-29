@@ -14,47 +14,48 @@ export const getUserById = async ({
     .input('id_usuario', values.idUsuario)
     .execute('fa_procGetUserById');
 
-  if (request.recordset.length === 0) return null;
+  if (request.recordsets.length === 0) return null;
 
-  const data = request.recordset.map((row: any) =>
-    formatObjectToCamelCase(row)
+  const userData = formatObjectToCamelCase(request.recordsets[0][0]);
+  const accessData = request.recordsets[1].map((acc: any) =>
+    formatObjectToCamelCase(acc)
   );
-
-  const sistemas: Sistema[] = removeDuplicateObjects(
-    data.map((item: any) => ({
-      idSistema: item.idSistema,
-      nombre: item.sistema,
-      url: item.url,
-      imageUrl: item.imageUrl
-    }))
+  const modulesData = request.recordsets[2].map((mod: any) =>
+    formatObjectToCamelCase(mod)
+  );
+  const systemsData = request.recordsets[3].map((sys: any) =>
+    formatObjectToCamelCase(sys)
   );
 
   const modulos: Modulo[] = removeDuplicateObjects(
-    data.map((item: any) => ({
+    modulesData.map((item: any) => ({
       idSistema: item.idSistema,
       idModulo: item.idModulo,
-      nombre: item.modulo
+      nombre: item.nombre
     }))
   );
 
-  const accesos: Acceso[] = data.map((item: any) => ({
-    idModulo: item.idModulo,
-    idAcceso: item.idAcceso,
-    nombre: item.acceso
-  }));
+  const accesos: Acceso[] = removeDuplicateObjects(
+    accessData.map((item: any) => ({
+      idSistema: item.idSistema,
+      idModulo: item.idModulo,
+      idAcceso: item.idAcceso,
+      nombre: item.nombre
+    }))
+  );
 
   const user: User = {
-    idUsuario: data[0].idUsuario,
-    usuario: data[0].usuario,
-    primerNombre: data[0].primerNombre,
-    apellidoPaterno: data[0].apellidoPaterno,
-    correoElectronico: data[0].correoElectronico,
+    idUsuario: userData.idUsuario,
+    usuario: userData.usuario,
+    primerNombre: userData.primerNombre,
+    apellidoPaterno: userData.apellidoPaterno,
+    correoElectronico: userData.correoElectronico,
     perfil: {
-      idPerfil: data[0].idPerfil,
-      rol: data[0].rol
+      idPerfil: userData.idPerfil,
+      rol: userData.rol
     },
-    fechaCreacion: data[0].fechaCreacion,
-    sistemas: sistemas.map((sistema: Sistema) => ({
+    fechaCreacion: userData.fechaCreacion,
+    sistemas: systemsData.map((sistema: Sistema) => ({
       ...sistema,
       modulos: modulos
         .filter((modulo: Modulo) => modulo.idSistema === sistema.idSistema)
@@ -63,9 +64,13 @@ export const getUserById = async ({
           return {
             ...restModulo,
             accesos: accesos
-              .filter((acceso: Acceso) => acceso.idModulo === modulo.idModulo)
+              .filter(
+                (acceso: Acceso) =>
+                  acceso.idSistema === modulo.idSistema &&
+                  acceso.idModulo === modulo.idModulo
+              )
               .map((acceso: Acceso) => {
-                const { idModulo, ...restAcceso } = acceso;
+                const { idSistema, idModulo, ...restAcceso } = acceso;
                 return restAcceso;
               })
           };
