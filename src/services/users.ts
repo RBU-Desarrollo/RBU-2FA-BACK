@@ -20,44 +20,56 @@ export const getUserById = async ({
     formatObjectToCamelCase(row)
   );
 
-  const accesos: Acceso[] = data.map((item: any) => ({
-    idAcceso: item.idAcceso,
-    nombre: item.acceso
-  }));
+  const sistemas: Sistema[] = removeDuplicateObjects(
+    data.map((item: any) => ({
+      idSistema: item.idSistema,
+      nombre: item.sistema,
+      url: item.url,
+      imageUrl: item.imageUrl
+    }))
+  );
+
   const modulos: Modulo[] = removeDuplicateObjects(
     data.map((item: any) => ({
+      idSistema: item.idSistema,
       idModulo: item.idModulo,
       nombre: item.modulo
     }))
   );
-  const sistemas: Sistema[] = removeDuplicateObjects(
-    data.map((item: any) => ({
-      idSistema: item.idSistema,
-      nombre: item.sistema
-    }))
-  );
+
+  const accesos: Acceso[] = data.map((item: any) => ({
+    idModulo: item.idModulo,
+    idAcceso: item.idAcceso,
+    nombre: item.acceso
+  }));
 
   const user: User = {
     idUsuario: data[0].idUsuario,
-    username: data[0].username,
+    usuario: data[0].usuario,
     primerNombre: data[0].primerNombre,
     apellidoPaterno: data[0].apellidoPaterno,
     correoElectronico: data[0].correoElectronico,
-    fechaCreacion: data[0].fechaCreacion,
     perfil: {
       idPerfil: data[0].idPerfil,
       rol: data[0].rol
     },
-    sistemas: sistemas.map((sistema) => ({
+    fechaCreacion: data[0].fechaCreacion,
+    sistemas: sistemas.map((sistema: Sistema) => ({
       ...sistema,
       modulos: modulos
-        .filter((modulo) => modulo.idModulo === sistema.idSistema)
-        .map((modulo) => ({
-          ...modulo,
-          accesos: accesos.filter(
-            (acceso) => acceso.idAcceso === modulo.idModulo
-          )
-        }))
+        .filter((modulo: Modulo) => modulo.idSistema === sistema.idSistema)
+        .map((modulo: Modulo) => {
+          const { idSistema, ...restModulo } = modulo;
+          return {
+            ...restModulo,
+            accesos: accesos
+              .filter((acceso: Acceso) => acceso.idModulo === modulo.idModulo)
+              .map((acceso: Acceso) => {
+                const { idModulo, ...restAcceso } = acceso;
+                return restAcceso;
+              })
+          };
+        })
     }))
   };
 

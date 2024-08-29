@@ -3,8 +3,7 @@ import { getUserByEmail } from '../../../services/auth';
 import { connectDB } from '../../../services/database/connect';
 import {
   getRecoveryInstance,
-  insRecoveryInstance,
-  putUpdatePassword
+  insRecoveryInstance
 } from '../../../services/recover-password';
 import { generateRecoveryToken } from '../../../utils/generators';
 import { formatObjectToCamelCase } from '../../../utils/formatters';
@@ -81,34 +80,6 @@ export const POST = async (req: Request, res: Response) => {
     });
 
     return res.status(200).json(recoveryInstance);
-  } catch (error) {
-    console.log(error);
-    return res.status(500).json({ message: 'Internal server error' });
-  }
-};
-
-// Update the user's password and delete the recovery instance
-export const PUT = async (req: Request, res: Response) => {
-  try {
-    const { idUsuario, password } = req.body as {
-      idUsuario: number;
-      password: string;
-    };
-
-    if (!idUsuario || !password)
-      return res.status(400).json({ message: 'Missing fields' });
-
-    const pool = await connectDB();
-
-    const result = await putUpdatePassword({
-      pool,
-      values: { idUsuario, password }
-    });
-
-    if (result.rowsAffected[0] === 0)
-      return res.status(500).json({ message: 'Error updating password' });
-
-    return res.status(200).json({ idUsuario });
   } catch (error) {
     console.log(error);
     return res.status(500).json({ message: 'Internal server error' });

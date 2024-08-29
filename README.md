@@ -27,7 +27,9 @@ API para el sistema de 2FA, construída con Node, Typescript y Express
     - [Recuperación de contraseña](#recuperación-de-contraseña)
       - [Verificar que el usuario haya solicitado la recuperación](#verificar-que-el-usuario-haya-solicitado-la-recuperación)
       - [Crea una instancia de recuperación](#crea-una-instancia-de-recuperación)
-      - [Cambia la contraseña del usuario y elimina la instancia de recuperación](#cambia-la-contraseña-del-usuario-y-elimina-la-instancia-de-recuperación)
+    - [Cambio de contraseña](#cambio-de-contraseña)
+      - [Verifica que el usuario exista y su contraseña sea válida](#verifica-que-el-usuario-exista-y-su-contraseña-sea-válida)
+      - [Cambia la contraseña del usuario y elimina sus instancias de recuperación](#cambia-la-contraseña-del-usuario-y-elimina-sus-instancias-de-recuperación)
 
 ## Stack de tecnologías
 
@@ -189,10 +191,23 @@ Si una ruta es `/api/auth` y otra es `/api/auth/otp`, se estructura los controla
 | :-------- | :------- | :------------------------------------------- |
 | `correo`  | `string` | **Required**. Correo electrónico del usuario |
 
-#### Cambia la contraseña del usuario y elimina la instancia de recuperación
+### Cambio de contraseña
+
+#### Verifica que el usuario exista y su contraseña sea válida
 
 ```http
-  PUT /api/recover-password
+  GET /api/change-password
+```
+
+| Parameter   | Type     | Description                                                |
+| :---------- | :------- | :--------------------------------------------------------- |
+| `idUsuario` | `number` | **Required**. ID de usuario                                |
+| `password`  | `string` | **Required**. Nueva contraseña (sin encriptar) del usuario |
+
+#### Cambia la contraseña del usuario y elimina sus instancias de recuperación
+
+```http
+  PUT /api/change-password
 ```
 
 | Parameter   | Type     | Description                                                |

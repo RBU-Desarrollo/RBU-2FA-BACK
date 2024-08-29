@@ -4,11 +4,13 @@ export type Perfil = {
 };
 
 export type Acceso = {
+  idModulo?: number;
   idAcceso: number;
   nombre: string;
 };
 
 export type Modulo = {
+  idSistema?: number;
   idModulo: number;
   nombre: string;
   accesos: Acceso[];
@@ -24,7 +26,7 @@ export type Sistema = {
 
 export type User = {
   idUsuario: number;
-  username: string;
+  usuario: string;
   primerNombre: string;
   apellidoPaterno: string;
   correoElectronico: string;
