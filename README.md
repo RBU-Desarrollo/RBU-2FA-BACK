@@ -9,6 +9,7 @@ API para el sistema de 2FA, construída con Node, Typescript y Express
   - [Stack de tecnologías](#stack-de-tecnologías)
   - [Variables de entorno](#variables-de-entorno)
   - [Instalación y ejecución](#instalación-y-ejecución)
+  - [Compilación para producción](#compilación-para-producción)
   - [Estructura de rutas](#estructura-de-rutas)
   - [Rutas de API](#rutas-de-api)
     - [Probar conexión](#probar-conexión)
@@ -65,6 +66,24 @@ Una vez rellenadas las variables de entorno, ejecuta
 ```bash
   pnpm dev
 ```
+
+## Compilación para producción
+
+Verificar las variables de entorno dentro de `.env.production`
+
+Compila la build de producción en la consola
+
+```bash
+  pnpm build
+```
+
+Se crearán 2 directorios: `build` y `dist`
+
+`build` es el compilado de Typescript a Javascript (ES6)
+
+`dist` es el compilado de Javascript (ES6) a Javascript (CommonJS)
+
+Utilizar el que mejor corresponda según la configuración del servidor
 
 ## Estructura de rutas
 

@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.ts",
   "scripts": {
-    "start": "node dist/index.js",
-    "build": "tsc",
-    "dev": "concurrently \"tsc --watch\" \"nodemon -q dist/index.js\""
+    "start": "node build/index.js",
+    "build": "tsc && babel build --out-dir dist && node post-build.js",
+    "dev": "concurrently \"tsc --watch\" \"nodemon -q build/index.js\""
   },
   "keywords": [],
   "author": "Max Rogers",
@@ -25,6 +25,11 @@
     "typescript": "^5.5.4"
   },
   "devDependencies": {
+    "@babel/cli": "^7.25.6",
+    "@babel/core": "^7.25.2",
+    "@babel/node": "^7.25.0",
+    "@babel/plugin-transform-runtime": "^7.25.4",
+    "@babel/preset-env": "^7.25.4",
     "@types/bcrypt": "^5.0.2",
     "@types/cors": "^2.8.17",
     "@types/jsonwebtoken": "^9.0.6",
