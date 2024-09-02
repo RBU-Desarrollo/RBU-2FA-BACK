@@ -28,6 +28,7 @@ export type Sistema = {
 export type User = {
   idUsuario: number;
   usuario: string;
+  rut: string;
   primerNombre: string;
   apellidoPaterno: string;
   correoElectronico: string;

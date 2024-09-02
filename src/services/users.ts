@@ -47,6 +47,7 @@ export const getUserById = async ({
   const user: User = {
     idUsuario: userData.idUsuario,
     usuario: userData.usuario,
+    rut: userData.rut,
     primerNombre: userData.primerNombre,
     apellidoPaterno: userData.apellidoPaterno,
     correoElectronico: userData.correoElectronico,

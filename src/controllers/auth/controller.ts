@@ -7,6 +7,7 @@ import { formatObjectToCamelCase } from '../../utils/formatters';
 import { sendVerificationCodeEmail } from '../../services/email/auth';
 import { getUserLogin } from '../../services/auth';
 import { insOTPCode } from '../../services/otp';
+import { getVerifyPasswordDate } from '../../services/verify-password-date';
 
 // Login user with username and password
 export const GET = async (req: Request, res: Response) => {
@@ -17,16 +18,19 @@ export const GET = async (req: Request, res: Response) => {
     };
 
     if (!username || !password)
-      return res.status(400).send('Username and password are required');
+      return res
+        .status(400)
+        .json({ message: 'Username and password are required' });
 
     const pool = await connectDB();
+
     const userResult = await getUserLogin({
       pool,
       values: { username }
     });
 
     if (userResult.recordset.length === 0)
-      return res.status(401).send('Username or password invalid');
+      return res.status(401).json({ message: 'Username or password invalid' });
 
     const user = userResult.recordset[0];
     const formattedUser = formatObjectToCamelCase(user);
@@ -36,8 +40,14 @@ export const GET = async (req: Request, res: Response) => {
       formattedUser.hashedPassword
     );
 
-    if (!isPasswordValid)
-      return res.status(401).send('Username or password invalid');
+    if (!isPasswordValid) return res.status(401).json({ invalidData: true });
+
+    const { returnValue } = await getVerifyPasswordDate({
+      pool,
+      values: { username }
+    });
+
+    if (returnValue === 0) return res.status(401).json({ expiredPass: true });
 
     delete formattedUser.hashedPassword;
     const verificationCode = generateVerificationCode();
@@ -48,7 +58,7 @@ export const GET = async (req: Request, res: Response) => {
     });
 
     if (otpResult.rowsAffected[0] === 0)
-      return res.status(500).send('Error creating OTP');
+      return res.status(500).json({ message: 'Error creating OTP' });
 
     await sendVerificationCodeEmail({
       to: formattedUser.correoElectronico,
@@ -72,7 +82,9 @@ export const POST = async (req: Request, res: Response) => {
     const { username, password } = req.body;
 
     if (!username || !password)
-      return res.status(400).send('Username and password are required');
+      return res
+        .status(400)
+        .json({ message: 'Username and password are required' });
 
     const hashedPassword = await hashPassword(password);
 
@@ -81,11 +93,12 @@ export const POST = async (req: Request, res: Response) => {
       .request()
       .input('username', sql.VarChar(50), username)
       .input('password', sql.VarChar(72), hashedPassword)
-      .input('primerNombre', sql.VarChar(50), 'Maximiliano')
-      .input('segundoNombre', sql.VarChar(50), 'Andrée')
-      .input('apellidoPaterno', sql.VarChar(50), 'Rogers')
-      .input('apellidoMaterno', sql.VarChar(50), 'Sepúlveda')
-      .input('correoElectronico', sql.VarChar(50), 'mrs@rbu.cl')
+      .input('rut', sql.VarChar(10), '11111111-1')
+      .input('primerNombre', sql.VarChar(50), 'Usuario')
+      .input('segundoNombre', sql.VarChar(50), 'Usuario')
+      .input('apellidoPaterno', sql.VarChar(50), 'Prueba')
+      .input('apellidoMaterno', sql.VarChar(50), 'Prueba')
+      .input('correoElectronico', sql.VarChar(50), 'correo@prueba.cl')
       .execute('fa_procInsUser');
 
     return res.status(200).json({ message: 'User created' });

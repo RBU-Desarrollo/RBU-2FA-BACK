@@ -167,6 +167,8 @@ Si una ruta es `/api/auth` y otra es `/api/auth/otp`, se estructura los controla
 | :-------- | :------- | :------------------ |
 | `token`   | `string` | **Required**. Token |
 
+Por defecto el token dura 5 días
+
 ### Usuarios
 
 #### Obtener data del usuario según ID, incluyendo sistemas, módulos y accesos
