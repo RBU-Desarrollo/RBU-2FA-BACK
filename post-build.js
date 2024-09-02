@@ -22,17 +22,17 @@ const renameFilesAndModifyImports = (dir) => {
         const newFullPath = join(dir, newFile);
         renameSync(fullPath, newFullPath);
 
-        // Read and modify the content of the file
         let content = readFileSync(newFullPath, 'utf-8');
+
         content = content.replace(
-          /(require|import)\(['"](.+?)['"]\)/g,
+          /(require|import)\(['"](\.\.?\/[^'"]+?)['"]\)/g,
           (match, p1, p2) => {
-            if (
-              typeof p2 === 'string' &&
-              (p2.endsWith('.js') || p2.endsWith('.mjs'))
-            ) {
-              return `${p1}('${p2.replace(/\.js|\.mjs/, '.cjs')}')`;
+            if (p2.includes('./') || p2.includes('../')) {
+              if (typeof p2 === 'string' && !p2.endsWith('.cjs')) {
+                return `${p1}('${p2}.cjs')`;
+              }
             }
+
             return match;
           }
         );

@@ -1,8 +1,6 @@
 import { config } from 'dotenv';
 
-const envFile =
-  process.env.NODE_ENV === 'production' ? '.env.production' : '.env';
-config({ path: envFile });
+config();
 
 export const PORT = process.env.PORT || 4000;
 

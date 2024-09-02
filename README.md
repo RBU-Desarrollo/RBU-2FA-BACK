@@ -22,7 +22,7 @@ API para el sistema de 2FA, construída con Node, Typescript y Express
     - [Token](#token)
       - [Validar token](#validar-token)
     - [Usuarios](#usuarios)
-      - [Obtener data del usuario según ID](#obtener-data-del-usuario-según-id)
+      - [Obtener data del usuario según ID, incluyendo sistemas, módulos y accesos](#obtener-data-del-usuario-según-id-incluyendo-sistemas-módulos-y-accesos)
     - [Sistemas](#sistemas)
       - [Obtener todos los sistemas](#obtener-todos-los-sistemas)
     - [Recuperación de contraseña](#recuperación-de-contraseña)
@@ -169,7 +169,7 @@ Si una ruta es `/api/auth` y otra es `/api/auth/otp`, se estructura los controla
 
 ### Usuarios
 
-#### Obtener data del usuario según ID
+#### Obtener data del usuario según ID, incluyendo sistemas, módulos y accesos
 
 ```http
   GET /api/users/1
