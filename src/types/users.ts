@@ -3,6 +3,12 @@ export type Perfil = {
   rol: string;
 };
 
+export type Zona = {
+  idZona?: number;
+  nombre?: string;
+  abreviado?: string;
+};
+
 export type Acceso = {
   idSistema?: number;
   idModulo?: number;
@@ -30,9 +36,14 @@ export type User = {
   usuario: string;
   rut: string;
   primerNombre: string;
+  segundoNombre: string | null;
   apellidoPaterno: string;
+  apellidoMaterno: string | null;
   correoElectronico: string;
+  telefono: string | null;
+  direccion: string | null;
   fechaCreacion: string;
   perfil: Perfil;
+  zona: Zona;
   sistemas: Sistema[];
 };

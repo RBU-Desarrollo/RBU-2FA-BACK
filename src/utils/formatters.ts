@@ -6,3 +6,10 @@ export const formatObjectToCamelCase = (obj: any) => {
   });
   return newObj;
 };
+
+export const base64UrlEncode = (data: string): string =>
+  Buffer.from(data)
+    .toString('base64')
+    .replace(/=/g, '')
+    .replace(/\+/g, '-')
+    .replace(/\//g, '_');

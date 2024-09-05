@@ -44,3 +44,18 @@ export const getUserByEmail = async ({
 
   return result;
 };
+
+export const putLastAccessDate = async ({
+  pool,
+  values
+}: {
+  pool: ConnectionPool;
+  values: { idUsuario: number };
+}) => {
+  const result = await pool
+    .request()
+    .input('id_usuario', sql.Int, values.idUsuario)
+    .execute('fa_procPutLastAccessDate');
+
+  return result;
+};

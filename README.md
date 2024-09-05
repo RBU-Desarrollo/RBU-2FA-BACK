@@ -31,6 +31,9 @@ API para el sistema de 2FA, construída con Node, Typescript y Express
     - [Cambio de contraseña](#cambio-de-contraseña)
       - [Verifica que el usuario exista y su contraseña sea válida](#verifica-que-el-usuario-exista-y-su-contraseña-sea-válida)
       - [Cambia la contraseña del usuario y elimina sus instancias de recuperación](#cambia-la-contraseña-del-usuario-y-elimina-sus-instancias-de-recuperación)
+    - [Token activos](#token-activos)
+      - [Verifica que el usuario tenga un token activo](#verifica-que-el-usuario-tenga-un-token-activo)
+      - [Crea un token activo expirable para el usuario](#crea-un-token-activo-expirable-para-el-usuario)
 
 ## Stack de tecnologías
 
@@ -235,3 +238,26 @@ Por defecto el token dura 5 días
 | :---------- | :------- | :--------------------------------------------------------- |
 | `idUsuario` | `number` | **Required**. ID de usuario                                |
 | `password`  | `string` | **Required**. Nueva contraseña (sin encriptar) del usuario |
+
+### Token activos
+
+#### Verifica que el usuario tenga un token activo
+
+```http
+  GET /api/active-token
+```
+
+| Parameter   | Type     | Description                 |
+| :---------- | :------- | :-------------------------- |
+| `idUsuario` | `number` | **Required**. ID de usuario |
+| `token`     | `string` | **Required**. Token activo  |
+
+#### Crea un token activo expirable para el usuario
+
+```http
+  POST /api/active-token
+```
+
+| Parameter   | Type     | Description                 |
+| :---------- | :------- | :-------------------------- |
+| `idUsuario` | `number` | **Required**. ID de usuario |

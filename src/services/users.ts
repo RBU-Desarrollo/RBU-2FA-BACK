@@ -49,11 +49,20 @@ export const getUserById = async ({
     usuario: userData.usuario,
     rut: userData.rut,
     primerNombre: userData.primerNombre,
+    segundoNombre: userData.segundoNombre,
     apellidoPaterno: userData.apellidoPaterno,
+    apellidoMaterno: userData.apellidoMaterno,
     correoElectronico: userData.correoElectronico,
+    telefono: userData.telefono,
+    direccion: userData.direccion,
     perfil: {
       idPerfil: userData.idPerfil,
       rol: userData.rol
+    },
+    zona: {
+      idZona: userData.idZona,
+      nombre: userData.nombreZona,
+      abreviado: userData.abreviadoZona
     },
     fechaCreacion: userData.fechaCreacion,
     sistemas: systemsData.map((sistema: Sistema) => ({

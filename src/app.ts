@@ -8,6 +8,8 @@ import usersRouter from './routes/users';
 import systemsRouter from './routes/systems';
 import recoverPasswordRouter from './routes/recover-password';
 import changePasswordRouter from './routes/change-password';
+import activeTokenRouter from './routes/active-token';
+import temporaryRouter from './routes/temporary';
 
 const app = express();
 
@@ -26,5 +28,8 @@ app.use('/api', usersRouter);
 app.use('/api', systemsRouter);
 app.use('/api', recoverPasswordRouter);
 app.use('/api', changePasswordRouter);
+app.use('/api', activeTokenRouter);
+
+app.use('/api', temporaryRouter);
 
 export default app;

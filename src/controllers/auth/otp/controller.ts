@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { getUserById } from '../../../services/auth';
+import { getUserById, putLastAccessDate } from '../../../services/auth';
 import { connectDB } from '../../../services/database/connect';
 import { formatObjectToCamelCase } from '../../../utils/formatters';
 import { delOTPCode, getOTPCode } from '../../../services/otp';
@@ -42,6 +42,8 @@ export const GET = async (req: Request, res: Response) => {
       return res.status(500).json({ message: 'Internal server error' });
 
     const token = generateToken(user.idUsuario);
+
+    await putLastAccessDate({ pool, values: { idUsuario: user.idUsuario } });
 
     return res.status(200).json({ user, token });
   } catch (error) {
