@@ -1,6 +1,10 @@
+import sql, { ConnectionPool } from 'mssql';
 import { Acceso, Modulo, Sistema, User } from '../types/users';
 import { removeDuplicateObjects } from '../utils/array';
-import { formatObjectToCamelCase } from '../utils/formatters';
+import {
+  capitalizeEveryWord,
+  formatObjectToCamelCase
+} from '../utils/formatters';
 
 export const getUserById = async ({
   pool,
@@ -11,7 +15,7 @@ export const getUserById = async ({
 }): Promise<User | null> => {
   const request = await pool
     .request()
-    .input('id_usuario', values.idUsuario)
+    .input('id_usuario', sql.Int, values.idUsuario)
     .execute('fa_procGetUserById');
 
   if (request.recordsets.length === 0) return null;
@@ -48,10 +52,14 @@ export const getUserById = async ({
     idUsuario: userData.idUsuario,
     usuario: userData.usuario,
     rut: userData.rut,
-    primerNombre: userData.primerNombre,
-    segundoNombre: userData.segundoNombre,
-    apellidoPaterno: userData.apellidoPaterno,
-    apellidoMaterno: userData.apellidoMaterno,
+    primerNombre: capitalizeEveryWord(userData.primerNombre),
+    segundoNombre: userData.segundoNombre
+      ? capitalizeEveryWord(userData.segundoNombre)
+      : null,
+    apellidoPaterno: capitalizeEveryWord(userData.apellidoPaterno),
+    apellidoMaterno: userData.apellidoMaterno
+      ? capitalizeEveryWord(userData.apellidoMaterno)
+      : null,
     correoElectronico: userData.correoElectronico,
     telefono: userData.telefono,
     direccion: userData.direccion,
@@ -65,6 +73,7 @@ export const getUserById = async ({
       abreviado: userData.abreviadoZona
     },
     fechaCreacion: userData.fechaCreacion,
+    fechaNuevaPassword: userData.fechaNuevaPassword,
     sistemas: systemsData.map((sistema: Sistema) => ({
       ...sistema,
       modulos: modulos
@@ -89,4 +98,25 @@ export const getUserById = async ({
   };
 
   return user;
+};
+
+export const updateUserById = async ({
+  pool,
+  values
+}: {
+  pool: ConnectionPool;
+  values: {
+    idUsuario: string;
+    telefono: string | null;
+    direccion: string | null;
+  };
+}) => {
+  const result = await pool
+    .request()
+    .input('id_usuario', sql.Int, values.idUsuario)
+    .input('telefono', sql.VarChar(20), values.telefono)
+    .input('direccion', sql.VarChar(100), values.direccion)
+    .execute('fa_procPutUserData');
+
+  return result;
 };

@@ -28,7 +28,7 @@ export const putUpdatePassword = async ({
   const result = await pool
     .request()
     .input('id_usuario', sql.Int, values.idUsuario)
-    .input('hashed_password', sql.VarChar(72), hashedPassword)
+    .input('hashed_password', sql.VarChar(255), hashedPassword)
     .execute('fa_procPutUpdatePassword');
 
   return result;

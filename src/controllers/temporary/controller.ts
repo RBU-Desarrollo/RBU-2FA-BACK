@@ -15,7 +15,7 @@ export const PLEASE_WORK = async (req: Request, res: Response) => {
         await pool
           .request()
           .input('id_usuario', sql.Int, user.id_usuario)
-          .input('password', sql.VarChar(72), hashedPassword)
+          .input('password', sql.VarChar(255), hashedPassword)
           .execute('fa_procMIGPutPassword');
       })
     );

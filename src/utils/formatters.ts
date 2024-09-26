@@ -13,3 +13,9 @@ export const base64UrlEncode = (data: string): string =>
     .replace(/=/g, '')
     .replace(/\+/g, '-')
     .replace(/\//g, '_');
+
+export const capitalizeEveryWord = (str: string): string => {
+  return str
+    .toLowerCase()
+    .replace(/(?:^|\s)\w/g, (match) => match.toUpperCase());
+};

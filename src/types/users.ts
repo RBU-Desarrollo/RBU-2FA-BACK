@@ -43,6 +43,7 @@ export type User = {
   telefono: string | null;
   direccion: string | null;
   fechaCreacion: string;
+  fechaNuevaPassword: string;
   perfil: Perfil;
   zona: Zona;
   sistemas: Sistema[];

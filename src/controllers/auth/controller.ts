@@ -36,7 +36,7 @@ export const GET = async (req: Request, res: Response) => {
     const formattedUser = formatObjectToCamelCase(user);
 
     const isPasswordValid = await comparePasswords(
-      String(password),
+      password,
       formattedUser.hashedPassword
     );
 
@@ -92,7 +92,7 @@ export const POST = async (req: Request, res: Response) => {
     await pool
       .request()
       .input('username', sql.VarChar(50), username)
-      .input('password', sql.VarChar(72), hashedPassword)
+      .input('password', sql.VarChar(255), hashedPassword)
       .input('rut', sql.VarChar(10), '11111111-1')
       .input('primerNombre', sql.VarChar(50), 'Usuario')
       .input('segundoNombre', sql.VarChar(50), 'Usuario')
