@@ -10,6 +10,7 @@ import {
   PUT as MODULE_PUT
 } from '../controllers/admin/modules/route';
 import { DELETE as MODULE_DELETE } from '../controllers/admin/modules/[id]/route';
+import { PUT as USER_PUT } from '../controllers/admin/users/route';
 
 const router = Router();
 
@@ -22,5 +23,7 @@ router.delete('/admin/systems/:id', SYSTEM_DELETE);
 router.post('/admin/modules', MODULE_POST);
 router.put('/admin/modules', MODULE_PUT);
 router.delete('/admin/modules/:id', MODULE_DELETE);
+
+router.put('/admin/users', USER_PUT);
 
 export default router;
