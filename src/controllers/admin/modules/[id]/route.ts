@@ -23,7 +23,7 @@ export const DELETE = async (req: Request, res: Response) => {
 
     return res.status(200).json({ message: 'Module deleted', deleted: true });
   } catch (error) {
-    console.log(error);
+    console.error(error);
     return res
       .status(500)
       .json({ message: 'Internal server error', deleted: false });

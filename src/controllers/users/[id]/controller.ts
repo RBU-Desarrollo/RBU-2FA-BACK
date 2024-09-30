@@ -20,7 +20,7 @@ export const GET = async (req: Request, res: Response) => {
 
     return res.status(200).json(user);
   } catch (error) {
-    console.log(error);
+    console.error(error);
     return res.status(500).json({ message: 'Internal Server Error' });
   }
 };
@@ -48,7 +48,7 @@ export const PUT = async (req: Request, res: Response) => {
 
     return res.status(200).json({ updated: true });
   } catch (error) {
-    console.log(error);
+    console.error(error);
     return res.status(500).json({ message: 'Internal Server Error' });
   }
 };

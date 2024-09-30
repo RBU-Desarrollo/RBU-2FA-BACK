@@ -25,7 +25,7 @@ export const GET = async (req: Request, res: Response) => {
 
     return res.status(200).json({ message: 'Token is valid' });
   } catch (error) {
-    console.log(error);
+    console.error(error);
     return res.status(500).json({ message: 'Internal server error' });
   }
 };
@@ -54,7 +54,7 @@ export const POST = async (req: Request, res: Response) => {
 
     return res.status(200).json({ token });
   } catch (error) {
-    console.log(error);
+    console.error(error);
     return res.status(500).json({ message: 'Internal server error' });
   }
 };

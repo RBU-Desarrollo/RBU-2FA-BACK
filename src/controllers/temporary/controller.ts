@@ -22,7 +22,7 @@ export const PLEASE_WORK = async (req: Request, res: Response) => {
 
     return res.status(200).json({ message: 'Success' });
   } catch (error) {
-    console.log(error);
+    console.error(error);
     return res.status(500).json({ message: 'Internal Server Error' });
   }
 };

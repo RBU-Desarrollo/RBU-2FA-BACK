@@ -27,7 +27,7 @@ export const PUT = async (req: Request, res: Response) => {
       .status(200)
       .json({ message: 'User activated successfully', activated: true });
   } catch (error) {
-    console.log(error);
+    console.error(error);
     return res
       .status(500)
       .json({ message: 'Internal server error', activated: false });

@@ -6,7 +6,7 @@ export const testDatabaseConnection = async (req: Request, res: Response) => {
     const databaseConnected = await isDBConnected();
     return res.json({ connected: databaseConnected });
   } catch (error) {
-    console.log(error);
+    console.error(error);
     res.status(500).json({ error: 'Internal server error' });
   }
 };

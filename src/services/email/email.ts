@@ -13,7 +13,7 @@ export const sendEmail = async (config: EmailValues): Promise<boolean> => {
 
     return true;
   } catch (error) {
-    console.log(error);
+    console.error(error);
     return false;
   }
 };

@@ -26,7 +26,7 @@ export const sendVerificationCodeEmail = async ({
 
     return isEmailSent;
   } catch (error) {
-    console.log(error);
+    console.error(error);
     return false;
   }
 };

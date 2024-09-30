@@ -68,7 +68,7 @@ export const GET = async (req: Request, res: Response) => {
 
     res.status(200).json({ idUsuario: formattedUser.idUsuario });
   } catch (error) {
-    console.log(error);
+    console.error(error);
     res.status(500).json({ message: 'Internal Server Error' });
   }
 };
@@ -103,7 +103,7 @@ export const POST = async (req: Request, res: Response) => {
 
     return res.status(200).json({ message: 'User created' });
   } catch (error) {
-    console.log(error);
+    console.error(error);
     res.status(500).json({ message: 'Internal Server Error' });
   }
 };
