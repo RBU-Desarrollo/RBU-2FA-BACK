@@ -25,11 +25,16 @@ export const GET = async (req: Request, res: Response) => {
     const modules = (recordsets[3] ?? []).map((module) =>
       formatObjectToCamelCase(module)
     );
-    const zones = (recordsets[4] ?? []).map((zone) =>
+    const accesses = (recordsets[4] ?? []).map((zone) =>
+      formatObjectToCamelCase(zone)
+    );
+    const zones = (recordsets[5] ?? []).map((zone) =>
       formatObjectToCamelCase(zone)
     );
 
-    return res.status(200).json({ systems, profiles, users, modules, zones });
+    return res
+      .status(200)
+      .json({ systems, profiles, users, modules, accesses, zones });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Internal server error' });

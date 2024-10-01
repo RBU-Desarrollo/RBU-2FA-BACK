@@ -17,6 +17,10 @@ import {
 import { GET as USER_GET } from '../controllers/admin/users/[rut]/route';
 import { DELETE as USER_DELETE } from '../controllers/admin/users/[id]/route';
 import { PUT as USER_ACTIVATE_PUT } from '../controllers/admin/users/[id]/activate/route';
+import { POST as PERMISSIONS_POST } from '../controllers/admin/permissions/route';
+import { GET as PERMISSIONS_GET } from '../controllers/admin/permissions/[idPerfil]/route';
+import { POST as PROFILES_POST } from '../controllers/admin/profiles/route';
+import { DELETE as PROFILES_DELETE } from '../controllers/admin/profiles/[id]/route';
 
 const router = Router();
 
@@ -35,5 +39,11 @@ router.post('/admin/users', USER_POST);
 router.put('/admin/users', USER_PUT);
 router.put('/admin/users/:id/activate', USER_ACTIVATE_PUT);
 router.delete('/admin/users/:id', USER_DELETE);
+
+router.get('/admin/permissions/:id', PERMISSIONS_GET);
+router.post('/admin/permissions', PERMISSIONS_POST);
+
+router.post('/admin/profiles', PROFILES_POST);
+router.delete('/admin/profiles/:id', PROFILES_DELETE);
 
 export default router;
