@@ -14,6 +14,21 @@ export const insProfile = async ({
   return request;
 };
 
+export const putProfile = async ({
+  pool,
+  values
+}: {
+  pool: ConnectionPool;
+  values: { idPerfil: number; rol: string };
+}) => {
+  const request = await pool
+    .request()
+    .input('id_perfil', sql.Int, values.idPerfil)
+    .input('rol', sql.VarChar(50), values.rol)
+    .execute('fa_procPutProfile');
+  return request;
+};
+
 export const delProfile = async ({
   pool,
   values
