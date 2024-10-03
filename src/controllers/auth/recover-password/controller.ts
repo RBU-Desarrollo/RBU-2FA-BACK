@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { getUserByEmail } from '../../../services/auth';
+import { getUserByEmail, getUserEmail } from '../../../services/auth';
 import { connectDB } from '../../../services/database/connect';
 import {
   getRecoveryInstance,
@@ -48,10 +48,9 @@ export const GET = async (req: Request, res: Response) => {
 // Create a recovery instance for the user
 export const POST = async (req: Request, res: Response) => {
   try {
-    const { correo } = req.body as { correo: string };
+    const { rut } = req.body as { rut: string };
 
-    if (!correo)
-      return res.status(400).json({ message: 'User ID is required' });
+    if (!rut) return res.status(400).json({ message: 'Missing fields' });
 
     const pool = await connectDB();
 
@@ -59,18 +58,33 @@ export const POST = async (req: Request, res: Response) => {
 
     const result = await insRecoveryInstance({
       pool,
-      values: { correo, token }
+      values: { rut, token }
     });
 
+    console.log({ rut, token });
+
     if (!result.recordset)
-      return res.status(500).json({ message: 'User email does not exist' });
+      return res.status(500).json({ message: 'User does not exist' });
 
     if (result.recordset.length === 0)
       return res
         .status(500)
         .json({ message: 'Error creating recovery instance' });
 
+    const userEmailRequest = await getUserEmail({ pool, values: { rut } });
+
+    if (userEmailRequest.recordset.length === 0)
+      return res.status(404).json({ message: 'User not found' });
+
+    const correo = userEmailRequest.recordset[0].correo;
+
+    console.log({ correo });
+
+    if (!correo) return res.status(404).json({ message: 'Email not found' });
+
     const recoveryInstance = formatObjectToCamelCase(result.recordset[0]);
+
+    console.log({ recoveryInstance });
 
     await sendRecoveryLink({
       to: correo,

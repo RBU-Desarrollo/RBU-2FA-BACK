@@ -20,11 +20,11 @@ export const insRecoveryInstance = async ({
   values
 }: {
   pool: ConnectionPool;
-  values: { correo: string; token: number };
+  values: { rut: string; token: number };
 }) => {
   const result = await pool
     .request()
-    .input('correo', sql.VarChar(50), values.correo)
+    .input('rut', sql.VarChar(10), values.rut)
     .input('token', sql.VarChar(200), values.token.toString())
     .execute('fa_procInsRecoveryInstance');
 
