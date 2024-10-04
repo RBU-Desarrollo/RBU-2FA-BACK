@@ -19,14 +19,12 @@ export const GET = async (req: Request, res: Response) => {
       idPerfil: parseInt(idPerfil)
     });
 
-    return res
-      .status(200)
-      .json({
-        permissions: permissions.map((p) => formatObjectToCamelCase(p)),
-        found: true
-      });
+    return res.status(200).json({
+      permissions: permissions.map((p) => formatObjectToCamelCase(p)),
+      found: true
+    });
   } catch (error) {
-    console.log(error);
+    console.error(error);
     return res
       .status(500)
       .json({ message: 'Internal server error', found: false });

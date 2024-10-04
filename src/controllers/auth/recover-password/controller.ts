@@ -61,8 +61,6 @@ export const POST = async (req: Request, res: Response) => {
       values: { rut, token }
     });
 
-    console.log({ rut, token });
-
     if (!result.recordset)
       return res.status(500).json({ message: 'User does not exist' });
 
@@ -78,13 +76,9 @@ export const POST = async (req: Request, res: Response) => {
 
     const correo = userEmailRequest.recordset[0].correo;
 
-    console.log({ correo });
-
     if (!correo) return res.status(404).json({ message: 'Email not found' });
 
     const recoveryInstance = formatObjectToCamelCase(result.recordset[0]);
-
-    console.log({ recoveryInstance });
 
     await sendRecoveryLink({
       to: correo,
