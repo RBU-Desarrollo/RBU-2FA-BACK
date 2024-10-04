@@ -34,6 +34,29 @@ API para el sistema de 2FA, construída con Node, Typescript y Express
     - [Token activos](#token-activos)
       - [Verifica que el usuario tenga un token activo](#verifica-que-el-usuario-tenga-un-token-activo)
       - [Crea un token activo expirable para el usuario](#crea-un-token-activo-expirable-para-el-usuario)
+    - [Admin](#admin)
+      - [Obtener contenido para administrador (sistemas, perfiles, usuarios, módulos, accesos y zonas)](#obtener-contenido-para-administrador-sistemas-perfiles-usuarios-módulos-accesos-y-zonas)
+    - [Admin - Sistemas](#admin---sistemas)
+      - [Crear un sistema](#crear-un-sistema)
+      - [Editar un sistema](#editar-un-sistema)
+      - [Eliminar un sistema](#eliminar-un-sistema)
+    - [Admin - Módulos](#admin---módulos)
+      - [Crear un módulo](#crear-un-módulo)
+      - [Editar un módulo](#editar-un-módulo)
+      - [Eliminar un módulo](#eliminar-un-módulo)
+    - [Admin - Permisos](#admin---permisos)
+      - [Obtener los permisos por perfil](#obtener-los-permisos-por-perfil)
+      - [Asignar permisos a un perfil](#asignar-permisos-a-un-perfil)
+    - [Admin - Perfiles](#admin---perfiles)
+      - [Crea un perfil](#crea-un-perfil)
+      - [Editar un perfil](#editar-un-perfil)
+      - [Eliminar un perfil](#eliminar-un-perfil)
+    - [Admin - Usuarios](#admin---usuarios)
+      - [Obtener datos de un usuario por RUT](#obtener-datos-de-un-usuario-por-rut)
+      - [Crea un usuario](#crea-un-usuario)
+      - [Edita un usuario](#edita-un-usuario)
+      - [Habilita un usuario inactivo](#habilita-un-usuario-inactivo)
+      - [Deshabilita un usuario activo](#deshabilita-un-usuario-activo)
 
 ## Stack de tecnologías
 
@@ -126,7 +149,7 @@ Si una ruta es `/api/auth` y otra es `/api/auth/otp`, se estructura los controla
 #### Iniciar sesión (usuario y contraseña)
 
 ```http
-  GET /api/auth
+  GET /api/auth?:username&:password
 ```
 
 | Parameter  | Type     | Description                         |
@@ -150,7 +173,7 @@ Si una ruta es `/api/auth` y otra es `/api/auth/otp`, se estructura los controla
 #### Validar usuario y OTP, genera token
 
 ```http
-  GET /api/auth/otp
+  GET /api/auth/otp?:idUsuario&:otp
 ```
 
 | Parameter   | Type     | Description                                       |
@@ -163,7 +186,7 @@ Si una ruta es `/api/auth` y otra es `/api/auth/otp`, se estructura los controla
 #### Validar token
 
 ```http
-  GET /api/auth/token
+  GET /api/auth/token?:token
 ```
 
 | Parameter | Type     | Description         |
@@ -177,7 +200,7 @@ Por defecto el token dura 5 días
 #### Obtener data del usuario según ID, incluyendo sistemas, módulos y accesos
 
 ```http
-  GET /api/users/1
+  GET /api/users/:idUsuario
 ```
 
 | Parameter   | Type     | Description                 |
@@ -197,7 +220,7 @@ Por defecto el token dura 5 días
 #### Verificar que el usuario haya solicitado la recuperación
 
 ```http
-  GET /api/recover-password
+  GET /api/recover-password?:token&:correo
 ```
 
 | Parameter | Type     | Description                                  |
@@ -220,7 +243,7 @@ Por defecto el token dura 5 días
 #### Verifica que el usuario exista y su contraseña sea válida
 
 ```http
-  GET /api/change-password
+  GET /api/change-password?:idUsuario&:password
 ```
 
 | Parameter   | Type     | Description                                                |
@@ -244,7 +267,7 @@ Por defecto el token dura 5 días
 #### Verifica que el usuario tenga un token activo
 
 ```http
-  GET /api/active-token
+  GET /api/active-token?:idUsuario&:token
 ```
 
 | Parameter   | Type     | Description                 |
@@ -261,3 +284,202 @@ Por defecto el token dura 5 días
 | Parameter   | Type     | Description                 |
 | :---------- | :------- | :-------------------------- |
 | `idUsuario` | `number` | **Required**. ID de usuario |
+
+### Admin
+
+#### Obtener contenido para administrador (sistemas, perfiles, usuarios, módulos, accesos y zonas)
+
+```http
+  GET /api/admin
+```
+
+### Admin - Sistemas
+
+#### Crear un sistema
+
+```http
+  POST /api/admin/systems
+```
+
+| Parameter  | Type     | Description                           |
+| :--------- | :------- | :------------------------------------ |
+| `nombre`   | `string` | **Required**. Nombre del sistema      |
+| `url`      | `string` | **Required**. URL del sistema         |
+| `imageUrl` | `string` | **Required**. URL de logo del sistema |
+
+#### Editar un sistema
+
+```http
+  PUT /api/admin/systems
+```
+
+| Parameter   | Type     | Description                           |
+| :---------- | :------- | :------------------------------------ |
+| `idSistema` | `number` | **Required**. ID del sistema          |
+| `nombre`    | `string` | **Required**. Nombre del sistema      |
+| `url`       | `string` | **Required**. URL del sistema         |
+| `imageUrl`  | `string` | **Required**. URL de logo del sistema |
+
+#### Eliminar un sistema
+
+```http
+  DELETE /api/admin/systems/:idSistema
+```
+
+| Parameter   | Type     | Description                  |
+| :---------- | :------- | :--------------------------- |
+| `idSistema` | `number` | **Required**. ID del sistema |
+
+### Admin - Módulos
+
+#### Crear un módulo
+
+```http
+  POST /api/admin/modules
+```
+
+| Parameter | Type     | Description                     |
+| :-------- | :------- | :------------------------------ |
+| `nombre`  | `string` | **Required**. Nombre del módulo |
+
+#### Editar un módulo
+
+```http
+  PUT /api/admin/modules
+```
+
+| Parameter  | Type     | Description                     |
+| :--------- | :------- | :------------------------------ |
+| `idModulo` | `number` | **Required**. ID del módulo     |
+| `nombre`   | `string` | **Required**. Nombre del módulo |
+
+#### Eliminar un módulo
+
+```http
+  DELETE /api/admin/modules/:idModulo
+```
+
+| Parameter  | Type     | Description                  |
+| :--------- | :------- | :--------------------------- |
+| `idModulo` | `number` | **Required**. ID del sistema |
+
+### Admin - Permisos
+
+#### Obtener los permisos por perfil
+
+```http
+  GET /api/admin/permissions/:idPerfil
+```
+
+| Parameter  | Type     | Description                 |
+| :--------- | :------- | :-------------------------- |
+| `idPerfil` | `number` | **Required**. ID del perfil |
+
+#### Asignar permisos a un perfil
+
+```http
+  POST /api/admin/permissions
+```
+
+| Parameter     | Type                                                                            | Description                 |
+| :------------ | :------------------------------------------------------------------------------ | :-------------------------- |
+| `idPerfil`    | `number`                                                                        | ID del perfil               |
+| `permissions` | `{ idPerfil: number; idSistema: number; idModulo: number; idAcceso: number }[]` | **Required**. ID del perfil |
+
+### Admin - Perfiles
+
+#### Crea un perfil
+
+```http
+  POST /api/admin/profiles
+```
+
+| Parameter | Type     | Description                  |
+| :-------- | :------- | :--------------------------- |
+| `rol`     | `string` | **Required**. Rol del perfil |
+
+#### Editar un perfil
+
+```http
+  PUT /api/admin/profiles
+```
+
+| Parameter  | Type     | Description                  |
+| :--------- | :------- | :--------------------------- |
+| `idPerfil` | `number` | **Required**. ID del perfil  |
+| `rol`      | `string` | **Required**. Rol del perfil |
+
+#### Eliminar un perfil
+
+```http
+  DELETE /api/admin/profiles/:idPerfil
+```
+
+| Parameter  | Type     | Description                 |
+| :--------- | :------- | :-------------------------- |
+| `idPerfil` | `number` | **Required**. ID del perfil |
+
+### Admin - Usuarios
+
+#### Obtener datos de un usuario por RUT
+
+```http
+  GET /api/admin/users/:rut
+```
+
+| Parameter | Type     | Description                   |
+| :-------- | :------- | :---------------------------- |
+| `rut`     | `string` | **Required**. RUT del usuario |
+
+#### Crea un usuario
+
+```http
+  POST /api/admin/users
+```
+
+| Parameter           | Type     | Description                                |
+| :------------------ | :------- | :----------------------------------------- |
+| `rut`               | `string` | **Required**. RUT del usuario              |
+| `primerNombre`      | `string` | **Required**. Primer nombre del usuario    |
+| `segundoNombre`     | `string` | Segundo nombre del usuario                 |
+| `apellidoPaterno`   | `string` | **Required**. Apellido paterno del usuario |
+| `apellidoMaterno`   | `string` | Apellido materno del usuario               |
+| `correoElectronico` | `string` | **Required**. Correo del usuario           |
+| `idZona`            | `number` | ID de zona del usuario                     |
+| `idPerfil`          | `number` | **Required**. ID de perfil del usuario     |
+
+#### Edita un usuario
+
+```http
+  PUT /api/admin/users
+```
+
+| Parameter           | Type     | Description                            |
+| :------------------ | :------- | :------------------------------------- |
+| `idUsuario`         | `number` | **Required**. ID del usuario           |
+| `usuario`           | `string` | **Required**. Usuario del usuario      |
+| `correoElectronico` | `string` | **Required**. Correo del usuario       |
+| `telefono`          | `string` | Teléfono del usuario                   |
+| `direccion`         | `string` | Dirección del usuario                  |
+| `idZona`            | `number` | ID de zona del usuario                 |
+| `idPerfil`          | `number` | **Required**. ID de perfil del usuario |
+
+#### Habilita un usuario inactivo
+
+```http
+  PUT /api/admin/users/:idUsuario/activate
+```
+
+| Parameter   | Type     | Description                  |
+| :---------- | :------- | :--------------------------- |
+| `idUsuario` | `number` | **Required**. ID del usuario |
+
+#### Deshabilita un usuario activo
+
+```http
+  DELETE /api/admin/users/:idUsuario
+```
+
+| Parameter   | Type     | Description                  |
+| :---------- | :------- | :--------------------------- |
+| `idUsuario` | `number` | **Required**. ID del usuario |

@@ -9,14 +9,14 @@ export const POST = async (req: Request, res: Response) => {
     const body = req.body as {
       rut: string;
       primerNombre: string;
-      segundoNombre: string;
+      segundoNombre?: string | null;
       apellidoPaterno: string;
-      apellidoMaterno: string;
+      apellidoMaterno?: string | null;
       correoElectronico: string;
       idZona?: number | null;
       idPerfil: number;
     };
-    const { idZona, ...rest } = body;
+    const { idZona, segundoNombre, apellidoMaterno, ...rest } = body;
     const hasUndefinedOrNull = Object.entries(rest).some(
       ([key, value]) => value === undefined || value === null
     );

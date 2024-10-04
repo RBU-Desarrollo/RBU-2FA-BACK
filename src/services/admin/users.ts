@@ -23,9 +23,9 @@ export const insUser = async ({
     password: string;
     rut: string;
     primerNombre: string;
-    segundoNombre: string;
+    segundoNombre?: string | null;
     apellidoPaterno: string;
-    apellidoMaterno: string;
+    apellidoMaterno?: string | null;
     correoElectronico: string;
     idZona?: number | null;
     idPerfil: number;
