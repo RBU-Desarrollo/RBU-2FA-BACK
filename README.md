@@ -152,10 +152,10 @@ Si una ruta es `/api/auth` y otra es `/api/auth/otp`, se estructura los controla
   GET /api/auth?:username&:password
 ```
 
-| Parameter  | Type     | Description                         |
-| :--------- | :------- | :---------------------------------- |
-| `username` | `string` | **Required**. Nombre de usuario     |
-| `password` | `string` | **Required**. Contraseña encriptada |
+| Parámetro  | Tipo     | Descripción                          |
+| :--------- | :------- | :----------------------------------- |
+| `username` | `string` | **Requerido**. Nombre de usuario     |
+| `password` | `string` | **Requerido**. Contraseña encriptada |
 
 #### Crear usuario (TEMPORAL)
 
@@ -163,10 +163,10 @@ Si una ruta es `/api/auth` y otra es `/api/auth/otp`, se estructura los controla
   POST /api/auth
 ```
 
-| Parameter  | Type     | Description                     |
-| :--------- | :------- | :------------------------------ |
-| `username` | `string` | **Required**. Nombre de usuario |
-| `password` | `string` | **Required**. Contraseña        |
+| Parámetro  | Tipo     | Descripción                      |
+| :--------- | :------- | :------------------------------- |
+| `username` | `string` | **Requerido**. Nombre de usuario |
+| `password` | `string` | **Requerido**. Contraseña        |
 
 ### OTP
 
@@ -176,10 +176,10 @@ Si una ruta es `/api/auth` y otra es `/api/auth/otp`, se estructura los controla
   GET /api/auth/otp?:idUsuario&:otp
 ```
 
-| Parameter   | Type     | Description                                       |
-| :---------- | :------- | :------------------------------------------------ |
-| `idUsuario` | `number` | **Required**. ID de usuario                       |
-| `otp`       | `number` | **Required**. Código de verificación de 6 dígitos |
+| Parámetro   | Tipo     | Descripción                                        |
+| :---------- | :------- | :------------------------------------------------- |
+| `idUsuario` | `number` | **Requerido**. ID de usuario                       |
+| `otp`       | `number` | **Requerido**. Código de verificación de 6 dígitos |
 
 ### Token
 
@@ -189,9 +189,9 @@ Si una ruta es `/api/auth` y otra es `/api/auth/otp`, se estructura los controla
   GET /api/auth/token?:token
 ```
 
-| Parameter | Type     | Description         |
-| :-------- | :------- | :------------------ |
-| `token`   | `string` | **Required**. Token |
+| Parámetro | Tipo     | Descripción          |
+| :-------- | :------- | :------------------- |
+| `token`   | `string` | **Requerido**. Token |
 
 Por defecto el token dura 5 días
 
@@ -203,9 +203,9 @@ Por defecto el token dura 5 días
   GET /api/users/:idUsuario
 ```
 
-| Parameter   | Type     | Description                 |
-| :---------- | :------- | :-------------------------- |
-| `idUsuario` | `number` | **Required**. ID de usuario |
+| Parámetro   | Tipo     | Descripción                  |
+| :---------- | :------- | :--------------------------- |
+| `idUsuario` | `number` | **Requerido**. ID de usuario |
 
 ### Sistemas
 
@@ -223,10 +223,10 @@ Por defecto el token dura 5 días
   GET /api/recover-password?:token&:correo
 ```
 
-| Parameter | Type     | Description                                  |
-| :-------- | :------- | :------------------------------------------- |
-| `token`   | `number` | **Required**. Token de recuperación          |
-| `correo`  | `string` | **Required**. Correo electrónico del usuario |
+| Parámetro | Tipo     | Descripción                                   |
+| :-------- | :------- | :-------------------------------------------- |
+| `token`   | `number` | **Requerido**. Token de recuperación          |
+| `correo`  | `string` | **Requerido**. Correo electrónico del usuario |
 
 #### Crea una instancia de recuperación
 
@@ -234,9 +234,9 @@ Por defecto el token dura 5 días
   POST /api/recover-password
 ```
 
-| Parameter | Type     | Description                                  |
-| :-------- | :------- | :------------------------------------------- |
-| `correo`  | `string` | **Required**. Correo electrónico del usuario |
+| Parámetro | Tipo     | Descripción                                   |
+| :-------- | :------- | :-------------------------------------------- |
+| `correo`  | `string` | **Requerido**. Correo electrónico del usuario |
 
 ### Cambio de contraseña
 
@@ -246,10 +246,10 @@ Por defecto el token dura 5 días
   GET /api/change-password?:idUsuario&:password
 ```
 
-| Parameter   | Type     | Description                                                |
-| :---------- | :------- | :--------------------------------------------------------- |
-| `idUsuario` | `number` | **Required**. ID de usuario                                |
-| `password`  | `string` | **Required**. Nueva contraseña (sin encriptar) del usuario |
+| Parámetro   | Tipo     | Descripción                                                 |
+| :---------- | :------- | :---------------------------------------------------------- |
+| `idUsuario` | `number` | **Requerido**. ID de usuario                                |
+| `password`  | `string` | **Requerido**. Nueva contraseña (sin encriptar) del usuario |
 
 #### Cambia la contraseña del usuario y elimina sus instancias de recuperación
 
@@ -257,10 +257,10 @@ Por defecto el token dura 5 días
   PUT /api/change-password
 ```
 
-| Parameter   | Type     | Description                                                |
-| :---------- | :------- | :--------------------------------------------------------- |
-| `idUsuario` | `number` | **Required**. ID de usuario                                |
-| `password`  | `string` | **Required**. Nueva contraseña (sin encriptar) del usuario |
+| Parámetro   | Tipo     | Descripción                                                 |
+| :---------- | :------- | :---------------------------------------------------------- |
+| `idUsuario` | `number` | **Requerido**. ID de usuario                                |
+| `password`  | `string` | **Requerido**. Nueva contraseña (sin encriptar) del usuario |
 
 ### Token activos
 
@@ -270,10 +270,10 @@ Por defecto el token dura 5 días
   GET /api/active-token?:idUsuario&:token
 ```
 
-| Parameter   | Type     | Description                 |
-| :---------- | :------- | :-------------------------- |
-| `idUsuario` | `number` | **Required**. ID de usuario |
-| `token`     | `string` | **Required**. Token activo  |
+| Parámetro   | Tipo     | Descripción                  |
+| :---------- | :------- | :--------------------------- |
+| `idUsuario` | `number` | **Requerido**. ID de usuario |
+| `token`     | `string` | **Requerido**. Token activo  |
 
 #### Crea un token activo expirable para el usuario
 
@@ -281,9 +281,9 @@ Por defecto el token dura 5 días
   POST /api/active-token
 ```
 
-| Parameter   | Type     | Description                 |
-| :---------- | :------- | :-------------------------- |
-| `idUsuario` | `number` | **Required**. ID de usuario |
+| Parámetro   | Tipo     | Descripción                  |
+| :---------- | :------- | :--------------------------- |
+| `idUsuario` | `number` | **Requerido**. ID de usuario |
 
 ### Admin
 
@@ -301,11 +301,11 @@ Por defecto el token dura 5 días
   POST /api/admin/systems
 ```
 
-| Parameter  | Type     | Description                           |
-| :--------- | :------- | :------------------------------------ |
-| `nombre`   | `string` | **Required**. Nombre del sistema      |
-| `url`      | `string` | **Required**. URL del sistema         |
-| `imageUrl` | `string` | **Required**. URL de logo del sistema |
+| Parámetro  | Tipo     | Descripción                            |
+| :--------- | :------- | :------------------------------------- |
+| `nombre`   | `string` | **Requerido**. Nombre del sistema      |
+| `url`      | `string` | **Requerido**. URL del sistema         |
+| `imageUrl` | `string` | **Requerido**. URL de logo del sistema |
 
 #### Editar un sistema
 
@@ -313,12 +313,12 @@ Por defecto el token dura 5 días
   PUT /api/admin/systems
 ```
 
-| Parameter   | Type     | Description                           |
-| :---------- | :------- | :------------------------------------ |
-| `idSistema` | `number` | **Required**. ID del sistema          |
-| `nombre`    | `string` | **Required**. Nombre del sistema      |
-| `url`       | `string` | **Required**. URL del sistema         |
-| `imageUrl`  | `string` | **Required**. URL de logo del sistema |
+| Parámetro   | Tipo     | Descripción                            |
+| :---------- | :------- | :------------------------------------- |
+| `idSistema` | `number` | **Requerido**. ID del sistema          |
+| `nombre`    | `string` | **Requerido**. Nombre del sistema      |
+| `url`       | `string` | **Requerido**. URL del sistema         |
+| `imageUrl`  | `string` | **Requerido**. URL de logo del sistema |
 
 #### Eliminar un sistema
 
@@ -326,9 +326,9 @@ Por defecto el token dura 5 días
   DELETE /api/admin/systems/:idSistema
 ```
 
-| Parameter   | Type     | Description                  |
-| :---------- | :------- | :--------------------------- |
-| `idSistema` | `number` | **Required**. ID del sistema |
+| Parámetro   | Tipo     | Descripción                   |
+| :---------- | :------- | :---------------------------- |
+| `idSistema` | `number` | **Requerido**. ID del sistema |
 
 ### Admin - Módulos
 
@@ -338,9 +338,9 @@ Por defecto el token dura 5 días
   POST /api/admin/modules
 ```
 
-| Parameter | Type     | Description                     |
-| :-------- | :------- | :------------------------------ |
-| `nombre`  | `string` | **Required**. Nombre del módulo |
+| Parámetro | Tipo     | Descripción                      |
+| :-------- | :------- | :------------------------------- |
+| `nombre`  | `string` | **Requerido**. Nombre del módulo |
 
 #### Editar un módulo
 
@@ -348,10 +348,10 @@ Por defecto el token dura 5 días
   PUT /api/admin/modules
 ```
 
-| Parameter  | Type     | Description                     |
-| :--------- | :------- | :------------------------------ |
-| `idModulo` | `number` | **Required**. ID del módulo     |
-| `nombre`   | `string` | **Required**. Nombre del módulo |
+| Parámetro  | Tipo     | Descripción                      |
+| :--------- | :------- | :------------------------------- |
+| `idModulo` | `number` | **Requerido**. ID del módulo     |
+| `nombre`   | `string` | **Requerido**. Nombre del módulo |
 
 #### Eliminar un módulo
 
@@ -359,9 +359,9 @@ Por defecto el token dura 5 días
   DELETE /api/admin/modules/:idModulo
 ```
 
-| Parameter  | Type     | Description                  |
-| :--------- | :------- | :--------------------------- |
-| `idModulo` | `number` | **Required**. ID del sistema |
+| Parámetro  | Tipo     | Descripción                   |
+| :--------- | :------- | :---------------------------- |
+| `idModulo` | `number` | **Requerido**. ID del sistema |
 
 ### Admin - Permisos
 
@@ -371,9 +371,9 @@ Por defecto el token dura 5 días
   GET /api/admin/permissions/:idPerfil
 ```
 
-| Parameter  | Type     | Description                 |
-| :--------- | :------- | :-------------------------- |
-| `idPerfil` | `number` | **Required**. ID del perfil |
+| Parámetro  | Tipo     | Descripción                  |
+| :--------- | :------- | :--------------------------- |
+| `idPerfil` | `number` | **Requerido**. ID del perfil |
 
 #### Asignar permisos a un perfil
 
@@ -381,10 +381,10 @@ Por defecto el token dura 5 días
   POST /api/admin/permissions
 ```
 
-| Parameter     | Type                                                                            | Description                 |
-| :------------ | :------------------------------------------------------------------------------ | :-------------------------- |
-| `idPerfil`    | `number`                                                                        | ID del perfil               |
-| `permissions` | `{ idPerfil: number; idSistema: number; idModulo: number; idAcceso: number }[]` | **Required**. ID del perfil |
+| Parámetro     | Tipo                                                                            | Descripción                  |
+| :------------ | :------------------------------------------------------------------------------ | :--------------------------- |
+| `idPerfil`    | `number`                                                                        | ID del perfil                |
+| `permissions` | `{ idPerfil: number; idSistema: number; idModulo: number; idAcceso: number }[]` | **Requerido**. ID del perfil |
 
 ### Admin - Perfiles
 
@@ -394,9 +394,9 @@ Por defecto el token dura 5 días
   POST /api/admin/profiles
 ```
 
-| Parameter | Type     | Description                  |
-| :-------- | :------- | :--------------------------- |
-| `rol`     | `string` | **Required**. Rol del perfil |
+| Parámetro | Tipo     | Descripción                   |
+| :-------- | :------- | :---------------------------- |
+| `rol`     | `string` | **Requerido**. Rol del perfil |
 
 #### Editar un perfil
 
@@ -404,10 +404,10 @@ Por defecto el token dura 5 días
   PUT /api/admin/profiles
 ```
 
-| Parameter  | Type     | Description                  |
-| :--------- | :------- | :--------------------------- |
-| `idPerfil` | `number` | **Required**. ID del perfil  |
-| `rol`      | `string` | **Required**. Rol del perfil |
+| Parámetro  | Tipo     | Descripción                   |
+| :--------- | :------- | :---------------------------- |
+| `idPerfil` | `number` | **Requerido**. ID del perfil  |
+| `rol`      | `string` | **Requerido**. Rol del perfil |
 
 #### Eliminar un perfil
 
@@ -415,9 +415,9 @@ Por defecto el token dura 5 días
   DELETE /api/admin/profiles/:idPerfil
 ```
 
-| Parameter  | Type     | Description                 |
-| :--------- | :------- | :-------------------------- |
-| `idPerfil` | `number` | **Required**. ID del perfil |
+| Parámetro  | Tipo     | Descripción                  |
+| :--------- | :------- | :--------------------------- |
+| `idPerfil` | `number` | **Requerido**. ID del perfil |
 
 ### Admin - Usuarios
 
@@ -427,9 +427,9 @@ Por defecto el token dura 5 días
   GET /api/admin/users/:rut
 ```
 
-| Parameter | Type     | Description                   |
-| :-------- | :------- | :---------------------------- |
-| `rut`     | `string` | **Required**. RUT del usuario |
+| Parámetro | Tipo     | Descripción                    |
+| :-------- | :------- | :----------------------------- |
+| `rut`     | `string` | **Requerido**. RUT del usuario |
 
 #### Crea un usuario
 
@@ -437,16 +437,16 @@ Por defecto el token dura 5 días
   POST /api/admin/users
 ```
 
-| Parameter           | Type     | Description                                |
-| :------------------ | :------- | :----------------------------------------- |
-| `rut`               | `string` | **Required**. RUT del usuario              |
-| `primerNombre`      | `string` | **Required**. Primer nombre del usuario    |
-| `segundoNombre`     | `string` | Segundo nombre del usuario                 |
-| `apellidoPaterno`   | `string` | **Required**. Apellido paterno del usuario |
-| `apellidoMaterno`   | `string` | Apellido materno del usuario               |
-| `correoElectronico` | `string` | **Required**. Correo del usuario           |
-| `idZona`            | `number` | ID de zona del usuario                     |
-| `idPerfil`          | `number` | **Required**. ID de perfil del usuario     |
+| Parámetro           | Tipo     | Descripción                                 |
+| :------------------ | :------- | :------------------------------------------ |
+| `rut`               | `string` | **Requerido**. RUT del usuario              |
+| `primerNombre`      | `string` | **Requerido**. Primer nombre del usuario    |
+| `segundoNombre`     | `string` | Segundo nombre del usuario                  |
+| `apellidoPaterno`   | `string` | **Requerido**. Apellido paterno del usuario |
+| `apellidoMaterno`   | `string` | Apellido materno del usuario                |
+| `correoElectronico` | `string` | **Requerido**. Correo del usuario           |
+| `idZona`            | `number` | ID de zona del usuario                      |
+| `idPerfil`          | `number` | **Requerido**. ID de perfil del usuario     |
 
 #### Edita un usuario
 
@@ -454,15 +454,15 @@ Por defecto el token dura 5 días
   PUT /api/admin/users
 ```
 
-| Parameter           | Type     | Description                            |
-| :------------------ | :------- | :------------------------------------- |
-| `idUsuario`         | `number` | **Required**. ID del usuario           |
-| `usuario`           | `string` | **Required**. Usuario del usuario      |
-| `correoElectronico` | `string` | **Required**. Correo del usuario       |
-| `telefono`          | `string` | Teléfono del usuario                   |
-| `direccion`         | `string` | Dirección del usuario                  |
-| `idZona`            | `number` | ID de zona del usuario                 |
-| `idPerfil`          | `number` | **Required**. ID de perfil del usuario |
+| Parámetro           | Tipo     | Descripción                             |
+| :------------------ | :------- | :-------------------------------------- |
+| `idUsuario`         | `number` | **Requerido**. ID del usuario           |
+| `usuario`           | `string` | **Requerido**. Usuario del usuario      |
+| `correoElectronico` | `string` | **Requerido**. Correo del usuario       |
+| `telefono`          | `string` | Teléfono del usuario                    |
+| `direccion`         | `string` | Dirección del usuario                   |
+| `idZona`            | `number` | ID de zona del usuario                  |
+| `idPerfil`          | `number` | **Requerido**. ID de perfil del usuario |
 
 #### Habilita un usuario inactivo
 
@@ -470,9 +470,9 @@ Por defecto el token dura 5 días
   PUT /api/admin/users/:idUsuario/activate
 ```
 
-| Parameter   | Type     | Description                  |
-| :---------- | :------- | :--------------------------- |
-| `idUsuario` | `number` | **Required**. ID del usuario |
+| Parámetro   | Tipo     | Descripción                   |
+| :---------- | :------- | :---------------------------- |
+| `idUsuario` | `number` | **Requerido**. ID del usuario |
 
 #### Deshabilita un usuario activo
 
@@ -480,6 +480,6 @@ Por defecto el token dura 5 días
   DELETE /api/admin/users/:idUsuario
 ```
 
-| Parameter   | Type     | Description                  |
-| :---------- | :------- | :--------------------------- |
-| `idUsuario` | `number` | **Required**. ID del usuario |
+| Parámetro   | Tipo     | Descripción                   |
+| :---------- | :------- | :---------------------------- |
+| `idUsuario` | `number` | **Requerido**. ID del usuario |
