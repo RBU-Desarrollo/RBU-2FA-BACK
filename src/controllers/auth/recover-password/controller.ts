@@ -8,6 +8,11 @@ import {
 import { generateRecoveryToken } from '../../../utils/generators';
 import { formatObjectToCamelCase } from '../../../utils/formatters';
 import { sendRecoveryLink } from '../../../services/email/recover-password';
+import {
+  convertVectorToBuffer,
+  decryptValue,
+  encryptValue
+} from '../../../lib/crypto';
 
 // Verify if user has requested a password recovery
 export const GET = async (req: Request, res: Response) => {
@@ -56,20 +61,30 @@ export const POST = async (req: Request, res: Response) => {
 
     const token = generateRecoveryToken();
 
+    const iv = convertVectorToBuffer();
+
+    const { content: encryptedRut } = encryptValue({
+      value: rut,
+      iv
+    });
+
     const result = await insRecoveryInstance({
       pool,
-      values: { rut, token }
+      values: { rut: encryptedRut, token }
     });
 
     if (!result.recordset)
-      return res.status(500).json({ message: 'User does not exist' });
+      return res.status(404).json({ message: 'User does not exist' });
 
     if (result.recordset.length === 0)
       return res
         .status(500)
         .json({ message: 'Error creating recovery instance' });
 
-    const userEmailRequest = await getUserEmail({ pool, values: { rut } });
+    const userEmailRequest = await getUserEmail({
+      pool,
+      values: { rut: encryptedRut }
+    });
 
     if (userEmailRequest.recordset.length === 0)
       return res.status(404).json({ message: 'User not found' });
@@ -80,10 +95,24 @@ export const POST = async (req: Request, res: Response) => {
 
     const recoveryInstance = formatObjectToCamelCase(result.recordset[0]);
 
+    const stringIv = iv.toString('hex');
+    const decryptedEmail = decryptValue({
+      iv: stringIv,
+      content: correo
+    });
+    const decryptedFirstName = decryptValue({
+      iv: stringIv,
+      content: recoveryInstance.primerNombre
+    });
+    const decryptedLastName = decryptValue({
+      iv: stringIv,
+      content: recoveryInstance.apellidoPaterno
+    });
+
     await sendRecoveryLink({
-      to: correo,
-      name: recoveryInstance.nombre,
-      correo,
+      to: decryptedEmail,
+      name: `${decryptedFirstName} ${decryptedLastName}`,
+      correo: decryptedEmail,
       token
     });
 

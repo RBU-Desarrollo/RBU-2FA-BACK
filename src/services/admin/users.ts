@@ -5,11 +5,12 @@ export const getUserByRut = async ({
   values
 }: {
   pool: ConnectionPool;
-  values: { rut: string };
+  values: { rut: string; normalRut: string };
 }) => {
   const request = await pool
     .request()
-    .input('rut', sql.VarChar(10), values.rut)
+    .input('rut', sql.VarChar(100), values.rut)
+    .input('normal_rut', sql.VarChar(100), values.normalRut)
     .execute('fa_procSearchUser');
   return request;
 };
@@ -54,8 +55,6 @@ export const putUser = async ({
   pool: ConnectionPool;
   values: {
     idUsuario: number;
-    usuario: string;
-    correoElectronico: string;
     telefono?: string | null;
     direccion?: string | null;
     idZona?: number | null;
@@ -65,8 +64,6 @@ export const putUser = async ({
   const request = await pool
     .request()
     .input('id_usuario', sql.Int, values.idUsuario)
-    .input('usuario', sql.VarChar(50), values.usuario)
-    .input('correo_electronico', sql.VarChar(50), values.correoElectronico)
     .input('telefono', sql.VarChar(20), values.telefono)
     .input('direccion', sql.VarChar(100), values.direccion)
     .input('id_zona', sql.Int, values.idZona)

@@ -39,7 +39,8 @@ export type User = {
   segundoNombre: string | null;
   apellidoPaterno: string;
   apellidoMaterno: string | null;
-  correoElectronico: string;
+  correoElectronico: string | null;
+  correoPersonal: string | null;
   telefono: string | null;
   direccion: string | null;
   fechaCreacion: string;

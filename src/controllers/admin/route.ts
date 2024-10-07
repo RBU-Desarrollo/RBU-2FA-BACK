@@ -2,6 +2,8 @@ import { Request, Response } from 'express';
 import { connectDB } from '../../services/database/connect';
 import { getAdminContent } from '../../services/admin/admin';
 import { formatObjectToCamelCase } from '../../utils/formatters';
+import { decryptValue } from '../../lib/crypto';
+import { decryptedUserValues } from '../../services/encrypt';
 
 export const GET = async (req: Request, res: Response) => {
   try {
@@ -19,9 +21,9 @@ export const GET = async (req: Request, res: Response) => {
     const profiles = (recordsets[1] ?? []).map((profile) =>
       formatObjectToCamelCase(profile)
     );
-    const users = (recordsets[2] ?? []).map((user) =>
-      formatObjectToCamelCase(user)
-    );
+    const users = (recordsets[2] ?? [])
+      .map((user) => formatObjectToCamelCase(user))
+      .map((user) => decryptedUserValues(user));
     const modules = (recordsets[3] ?? []).map((module) =>
       formatObjectToCamelCase(module)
     );

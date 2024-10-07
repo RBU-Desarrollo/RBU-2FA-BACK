@@ -55,25 +55,15 @@ export const POST = async (req: Request, res: Response) => {
 
 export const PUT = async (req: Request, res: Response) => {
   try {
-    const {
-      idUsuario,
-      usuario,
-      correoElectronico,
-      telefono,
-      direccion,
-      idZona,
-      idPerfil
-    } = req.body as {
+    const { idUsuario, telefono, direccion, idZona, idPerfil } = req.body as {
       idUsuario: number;
-      usuario: string;
-      correoElectronico: string;
       telefono?: string | null;
       direccion?: string | null;
       idZona?: number | null;
       idPerfil: number;
     };
 
-    if (!idUsuario || !usuario || !correoElectronico || !idPerfil) {
+    if (!idUsuario || !idPerfil) {
       return res
         .status(400)
         .json({ message: 'Missing required fields', updated: false });
@@ -84,8 +74,6 @@ export const PUT = async (req: Request, res: Response) => {
       pool,
       values: {
         idUsuario,
-        usuario,
-        correoElectronico,
         telefono,
         direccion,
         idZona,

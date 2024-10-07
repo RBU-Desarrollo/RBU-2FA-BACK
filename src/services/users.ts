@@ -5,6 +5,7 @@ import {
   capitalizeEveryWord,
   formatObjectToCamelCase
 } from '../utils/formatters';
+import { decryptedUserValues } from './encrypt';
 
 export const getUserById = async ({
   pool,
@@ -20,7 +21,7 @@ export const getUserById = async ({
 
   if (request.recordsets.length === 0) return null;
 
-  const userData = formatObjectToCamelCase(request.recordsets[0][0]);
+  let userData = formatObjectToCamelCase(request.recordsets[0][0]);
   const accessData = request.recordsets[1].map((acc: any) =>
     formatObjectToCamelCase(acc)
   );
@@ -48,6 +49,8 @@ export const getUserById = async ({
     }))
   );
 
+  userData = decryptedUserValues(userData);
+
   const user: User = {
     idUsuario: userData.idUsuario,
     usuario: userData.usuario,
@@ -61,6 +64,7 @@ export const getUserById = async ({
       ? capitalizeEveryWord(userData.apellidoMaterno)
       : null,
     correoElectronico: userData.correoElectronico,
+    correoPersonal: userData.correoPersonal,
     telefono: userData.telefono,
     direccion: userData.direccion,
     perfil: {

@@ -39,7 +39,7 @@ export const getUserByEmail = async ({
 }) => {
   const result = await pool
     .request()
-    .input('correo', sql.VarChar(50), values.correo)
+    .input('correo', sql.VarChar(100), values.correo)
     .execute('fa_procGetUserByEmail');
 
   return result;
@@ -54,7 +54,7 @@ export const getUserEmail = async ({
 }) => {
   const result = await pool
     .request()
-    .input('rut', sql.VarChar(10), values.rut)
+    .input('rut', sql.VarChar(100), values.rut)
     .execute('fa_procGetUserEmail');
 
   return result;

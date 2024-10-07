@@ -8,6 +8,12 @@ import { sendVerificationCodeEmail } from '../../services/email/auth';
 import { getUserLogin } from '../../services/auth';
 import { insOTPCode } from '../../services/otp';
 import { getVerifyPasswordDate } from '../../services/verify-password-date';
+import {
+  convertVectorToBuffer,
+  convertVectorToString,
+  decryptValue,
+  encryptValue
+} from '../../lib/crypto';
 
 // Login user with username and password
 export const GET = async (req: Request, res: Response) => {
@@ -24,9 +30,16 @@ export const GET = async (req: Request, res: Response) => {
 
     const pool = await connectDB();
 
+    const iv = convertVectorToBuffer();
+
+    const { content: encryptedUsername } = encryptValue({
+      value: username,
+      iv
+    });
+
     const userResult = await getUserLogin({
       pool,
-      values: { username }
+      values: { username: encryptedUsername }
     });
 
     if (userResult.recordset.length === 0)
@@ -44,7 +57,7 @@ export const GET = async (req: Request, res: Response) => {
 
     const { returnValue } = await getVerifyPasswordDate({
       pool,
-      values: { username }
+      values: { username: encryptedUsername }
     });
 
     if (returnValue === 0) return res.status(401).json({ expiredPass: true });
@@ -60,9 +73,23 @@ export const GET = async (req: Request, res: Response) => {
     if (otpResult.rowsAffected[0] === 0)
       return res.status(500).json({ message: 'Error creating OTP' });
 
+    const stringIv = convertVectorToString();
+
+    const correoElectronico = formattedUser.correoElectronico
+      ? decryptValue({ iv: stringIv, content: formattedUser.correoElectronico })
+      : null;
+    const primerNombre = decryptValue({
+      iv: stringIv,
+      content: formattedUser.primerNombre
+    });
+    const apellidoPaterno = decryptValue({
+      iv: stringIv,
+      content: formattedUser.apellidoPaterno
+    });
+
     await sendVerificationCodeEmail({
-      to: formattedUser.correoElectronico,
-      name: `${formattedUser.primerNombre} ${formattedUser.apellidoPaterno}`,
+      to: correoElectronico || '',
+      name: `${primerNombre} ${apellidoPaterno}`,
       verificationCode
     });
 
