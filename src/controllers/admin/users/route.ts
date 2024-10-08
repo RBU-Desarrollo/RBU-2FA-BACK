@@ -3,6 +3,7 @@ import { connectDB } from '../../../services/database/connect';
 import { insUser, putUser } from '../../../services/admin/users';
 import { generateRandomPassword } from '../../../utils/generators';
 import { hashPassword } from '../../../lib/bcrypt';
+import { convertVectorToBuffer, encryptValue } from '../../../lib/crypto';
 
 export const POST = async (req: Request, res: Response) => {
   try {
@@ -12,7 +13,8 @@ export const POST = async (req: Request, res: Response) => {
       segundoNombre?: string | null;
       apellidoPaterno: string;
       apellidoMaterno?: string | null;
-      correoElectronico: string;
+      correoElectronico?: string | null;
+      correoPersonal?: string | null;
       idZona?: number | null;
       idPerfil: number;
     };
@@ -28,6 +30,31 @@ export const POST = async (req: Request, res: Response) => {
 
     const password = generateRandomPassword();
     const hashedPassword = await hashPassword(password);
+
+    const iv = convertVectorToBuffer();
+    const encryptedUsername = encryptValue({ value: body.rut, iv });
+    const encrypyedFirstName = encryptValue({ value: body.primerNombre, iv });
+    const encryptedLastName = encryptValue({ value: body.apellidoPaterno, iv });
+    const encryptedSecondName = segundoNombre
+      ? encryptValue({ value: segundoNombre, iv })
+      : null;
+    const encryptedSecondLastName = apellidoMaterno
+      ? encryptValue({ value: apellidoMaterno, iv })
+      : null;
+    const encryptedEmail = body.correoElectronico
+      ? encryptValue({ value: body.correoElectronico, iv })
+      : null;
+    const encryptedPersonalEmail = body.correoPersonal
+      ? encryptValue({ value: body.correoPersonal, iv })
+      : null;
+
+    body.rut = encryptedUsername.content;
+    body.primerNombre = encrypyedFirstName.content;
+    body.apellidoPaterno = encryptedLastName.content;
+    body.segundoNombre = encryptedSecondName?.content;
+    body.apellidoMaterno = encryptedSecondLastName?.content;
+    body.correoElectronico = encryptedEmail?.content;
+    body.correoPersonal = encryptedPersonalEmail?.content;
 
     const pool = await connectDB();
     const request = await insUser({
@@ -55,8 +82,18 @@ export const POST = async (req: Request, res: Response) => {
 
 export const PUT = async (req: Request, res: Response) => {
   try {
-    const { idUsuario, telefono, direccion, idZona, idPerfil } = req.body as {
+    const {
+      idUsuario,
+      correoElectronico,
+      correoPersonal,
+      telefono,
+      direccion,
+      idZona,
+      idPerfil
+    } = req.body as {
       idUsuario: number;
+      correoElectronico?: string | null;
+      correoPersonal?: string | null;
       telefono?: string | null;
       direccion?: string | null;
       idZona?: number | null;
@@ -69,11 +106,27 @@ export const PUT = async (req: Request, res: Response) => {
         .json({ message: 'Missing required fields', updated: false });
     }
 
+    const iv = convertVectorToBuffer();
+    let encryptedEmail = null;
+    let encryptedPersonalEmail = null;
+
+    if (correoElectronico) {
+      const { content } = encryptValue({ value: correoElectronico, iv });
+      encryptedEmail = content;
+    }
+
+    if (correoPersonal) {
+      const { content } = encryptValue({ value: correoPersonal, iv });
+      encryptedPersonalEmail = content;
+    }
+
     const pool = await connectDB();
     const request = await putUser({
       pool,
       values: {
         idUsuario,
+        correoElectronico: encryptedEmail,
+        correoPersonal: encryptedPersonalEmail,
         telefono,
         direccion,
         idZona,

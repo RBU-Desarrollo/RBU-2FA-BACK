@@ -26,9 +26,7 @@ export const GET = async (req: Request, res: Response) => {
         .status(404)
         .json({ message: 'User not found or is already active' });
 
-    const user = decryptedUserValues(
-      formatObjectToCamelCase(request.recordset[0])
-    );
+    const user = formatObjectToCamelCase(request.recordset[0]);
 
     return res.status(200).json(user);
   } catch (error) {

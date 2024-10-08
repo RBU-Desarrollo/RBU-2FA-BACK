@@ -27,21 +27,23 @@ export const insUser = async ({
     segundoNombre?: string | null;
     apellidoPaterno: string;
     apellidoMaterno?: string | null;
-    correoElectronico: string;
+    correoElectronico?: string | null;
+    correoPersonal?: string | null;
     idZona?: number | null;
     idPerfil: number;
   };
 }) => {
   const request = await pool
     .request()
-    .input('username', sql.VarChar(50), values.rut)
+    .input('username', sql.VarChar(100), values.rut)
     .input('password', sql.VarChar(255), values.password)
-    .input('rut', sql.VarChar(10), values.rut)
-    .input('primerNombre', sql.VarChar(50), values.primerNombre)
-    .input('segundoNombre', sql.VarChar(50), values.segundoNombre)
-    .input('apellidoPaterno', sql.VarChar(50), values.apellidoPaterno)
-    .input('apellidoMaterno', sql.VarChar(50), values.apellidoMaterno)
-    .input('correoElectronico', sql.VarChar(50), values.correoElectronico)
+    .input('rut', sql.VarChar(100), values.rut)
+    .input('primerNombre', sql.VarChar(100), values.primerNombre)
+    .input('segundoNombre', sql.VarChar(100), values.segundoNombre)
+    .input('apellidoPaterno', sql.VarChar(100), values.apellidoPaterno)
+    .input('apellidoMaterno', sql.VarChar(100), values.apellidoMaterno)
+    .input('correoElectronico', sql.VarChar(100), values.correoElectronico)
+    .input('correoPersonal', sql.VarChar(100), values.correoPersonal)
     .input('idZona', sql.Int, values.idZona ?? null)
     .input('idPerfil', sql.Int, values.idPerfil)
     .execute('fa_procInsUser');
@@ -55,6 +57,8 @@ export const putUser = async ({
   pool: ConnectionPool;
   values: {
     idUsuario: number;
+    correoElectronico?: string | null;
+    correoPersonal?: string | null;
     telefono?: string | null;
     direccion?: string | null;
     idZona?: number | null;
@@ -64,6 +68,8 @@ export const putUser = async ({
   const request = await pool
     .request()
     .input('id_usuario', sql.Int, values.idUsuario)
+    .input('correo_electronico', sql.VarChar(100), values.correoElectronico)
+    .input('correo_personal', sql.VarChar(100), values.correoPersonal)
     .input('telefono', sql.VarChar(20), values.telefono)
     .input('direccion', sql.VarChar(100), values.direccion)
     .input('id_zona', sql.Int, values.idZona)
