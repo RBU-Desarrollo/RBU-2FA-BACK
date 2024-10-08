@@ -24,7 +24,16 @@ export const GET = async (req: Request, res: Response) => {
 
     const pool = await connectDB();
 
-    const resultUser = await getUserByEmail({ pool, values: { correo } });
+    const iv = convertVectorToBuffer();
+    const { content: encryptedEmail } = encryptValue({
+      value: correo,
+      iv
+    });
+
+    const resultUser = await getUserByEmail({
+      pool,
+      values: { correo: encryptedEmail }
+    });
 
     if (resultUser.recordset.length === 0)
       return res.status(404).json({ message: 'User not found' });
@@ -38,10 +47,6 @@ export const GET = async (req: Request, res: Response) => {
 
     if (resultRecovery.recordset.length === 0)
       return res.status(404).json({ message: 'Recovery instance not found' });
-
-    const recoveryInstance = formatObjectToCamelCase(
-      resultRecovery.recordset[0]
-    );
 
     return res.status(200).json({ idUsuario: user.idUsuario });
   } catch (error) {
@@ -116,7 +121,9 @@ export const POST = async (req: Request, res: Response) => {
       token
     });
 
-    return res.status(200).json(recoveryInstance);
+    return res
+      .status(200)
+      .json({ nombre: `${decryptedFirstName} ${decryptedLastName}` });
   } catch (error) {
     console.error(error);
     return res.status(500).json({ message: 'Internal server error' });
