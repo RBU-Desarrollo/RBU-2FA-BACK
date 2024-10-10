@@ -16,7 +16,14 @@ import temporaryRouter from './routes/temporary';
 const app = express();
 
 app.use(
-  cors({ origin: ['http://localhost:5173', 'https://rbusantiago.rbu.cl'] })
+  cors({
+    origin: [
+      'http://localhost:5173',
+      'https://rbusantiago.rbu.cl',
+      'http://localhost:4000',
+      'https://apicorreo.rbu.cl'
+    ]
+  })
 );
 
 app.use(express.json());

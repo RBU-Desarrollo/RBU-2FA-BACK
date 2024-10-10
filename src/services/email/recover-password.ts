@@ -15,7 +15,7 @@ export const sendRecoveryLink = async ({
 }: SendVerificationCodeEmailValues): Promise<boolean> => {
   try {
     const isEmailSent = await sendEmail({
-      from: 'mrs@rbu.cl',
+      from: 'rbupass@rbu.cl',
       to,
       subject: 'Recupera tu contraseña',
       attachments: [],
