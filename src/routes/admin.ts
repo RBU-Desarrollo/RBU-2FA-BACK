@@ -24,6 +24,7 @@ import {
   PUT as PROFILES_PUT
 } from '../controllers/admin/profiles/route';
 import { DELETE as PROFILES_DELETE } from '../controllers/admin/profiles/[id]/route';
+import { PUT as USER_ZONE_PUT } from '../controllers/admin/users/zones/route';
 
 const router = Router();
 
@@ -40,6 +41,7 @@ router.delete('/admin/modules/:id', MODULE_DELETE);
 router.get('/admin/users/:rut', USER_GET);
 router.post('/admin/users', USER_POST);
 router.put('/admin/users', USER_PUT);
+router.put('/admin/users/zones', USER_ZONE_PUT);
 router.put('/admin/users/:id/activate', USER_ACTIVATE_PUT);
 router.delete('/admin/users/:id', USER_DELETE);
 

@@ -105,3 +105,18 @@ export const activateUser = async ({
     .execute('fa_procActivateUser');
   return request;
 };
+
+export const putUsersZone = async ({
+  pool,
+  values
+}: {
+  pool: ConnectionPool;
+  values: { idUsuario: number; rut: string };
+}) => {
+  const request = await pool
+    .request()
+    .input('id_usuario', sql.Int, values.idUsuario)
+    .input('rut', sql.VarChar(12), values.rut)
+    .execute('fa_procPutUserZone');
+  return request;
+};

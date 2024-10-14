@@ -3,7 +3,6 @@ import { connectDB } from '../../../../services/database/connect';
 import { getUserByRut } from '../../../../services/admin/users';
 import { formatObjectToCamelCase } from '../../../../utils/formatters';
 import { convertVectorToBuffer, encryptValue } from '../../../../lib/crypto';
-import { decryptedUserValues } from '../../../../services/encrypt';
 
 export const GET = async (req: Request, res: Response) => {
   try {
