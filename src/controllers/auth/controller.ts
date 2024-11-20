@@ -70,6 +70,11 @@ export const GET = async (req: Request, res: Response) => {
       values: { idUsuario: formattedUser.idUsuario, otp: verificationCode }
     });
 
+    if (otpResult.returnValue === 0)
+      return res
+        .status(401)
+        .json({ message: 'User blocked for too many attempts' });
+
     if (otpResult.rowsAffected[0] === 0)
       return res.status(500).json({ message: 'Error creating OTP' });
 

@@ -19,9 +19,14 @@ app.use(
   cors({
     origin: [
       'http://localhost:5173',
+      'http://localhost:5174',
+      'http://localhost:5175',
       'https://rbusantiago.rbu.cl',
+      'https://mantenimiento.rbu.cl',
+      'https://gsoft.rbu.cl',
       'http://localhost:4000',
-      'https://apicorreo.rbu.cl'
+      'https://apicorreo.rbu.cl',
+      'http://192.168.70.12:3051'
     ]
   })
 );

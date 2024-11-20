@@ -11,6 +11,7 @@ export const getActiveToken = async ({
     .request()
     .input('id_usuario', sql.Int, values.idUsuario)
     .input('token', sql.VarChar(132), values.token)
+    .output('isValid', sql.Bit)
     .execute('fa_procGetActiveToken');
 
   return result;

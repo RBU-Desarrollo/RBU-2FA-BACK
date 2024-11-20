@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import { getUserById, putLastAccessDate } from '../../../services/auth';
 import { connectDB } from '../../../services/database/connect';
 import { formatObjectToCamelCase } from '../../../utils/formatters';
-import { delOTPCode, getOTPCode } from '../../../services/otp';
+import { delOTPCode, getOTPCode, insBloqueoOtp } from '../../../services/otp';
 import { generateToken } from '../../../lib/jwt';
 
 // Validate if the OTP and the user are correct, then send the user data and token
@@ -30,7 +30,31 @@ export const GET = async (req: Request, res: Response) => {
       values: { idUsuario: user.idUsuario, otp: parseInt(otp as string) }
     });
 
-    if (resultOtp.recordset.length === 0)
+    // Bloqueado
+    if (resultOtp.returnValue === 0) {
+      await insBloqueoOtp({ pool, values: { idUsuario: user.idUsuario } });
+      return res
+        .status(403)
+        .json({ message: 'Too many attempts, user blocked', blocked: true });
+    }
+
+    // Reintentos
+    if (resultOtp.returnValue === 2) {
+      let attemptsRemaining = 3;
+
+      if (
+        Array.isArray(resultOtp.recordsets) &&
+        resultOtp.recordsets[0]?.length > 0
+      ) {
+        attemptsRemaining = resultOtp.recordsets[0][0].attemptsRemaining;
+      }
+
+      return res
+        .status(401)
+        .json({ message: 'Invalid OTP', attemptsRemaining });
+    }
+
+    if (resultOtp.returnValue !== 1)
       return res.status(401).json({ message: 'Invalid OTP' });
 
     const isOTPDeleted = await delOTPCode({

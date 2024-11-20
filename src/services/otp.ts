@@ -51,3 +51,18 @@ export const delOTPCode = async ({
     return false;
   }
 };
+
+export const insBloqueoOtp = async ({
+  pool,
+  values
+}: {
+  pool: ConnectionPool;
+  values: { idUsuario: number };
+}) => {
+  const result = await pool
+    .request()
+    .input('idUsuario', sql.Int, values.idUsuario)
+    .execute('fa_procInsBloqueoOTP');
+
+  return result;
+};

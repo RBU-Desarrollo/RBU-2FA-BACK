@@ -15,12 +15,12 @@ export const GET = async (req: Request, res: Response) => {
       return res.status(400).json({ message: 'Missing required fields' });
 
     const pool = await connectDB();
-    const { returnValue } = await getActiveToken({
+    const { output } = await getActiveToken({
       pool,
       values: { idUsuario, token }
     });
 
-    if (returnValue === 0)
+    if (!output.isValid)
       return res.status(403).json({ message: 'Token not valid' });
 
     return res.status(200).json({ message: 'Token is valid' });
