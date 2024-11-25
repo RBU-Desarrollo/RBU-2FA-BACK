@@ -72,8 +72,8 @@ export const GET = async (req: Request, res: Response) => {
 
     if (otpResult.returnValue === 0)
       return res
-        .status(401)
-        .json({ message: 'User blocked for too many attempts' });
+        .status(403)
+        .json({ message: 'User blocked for too many attempts', blocked: true });
 
     if (otpResult.rowsAffected[0] === 0)
       return res.status(500).json({ message: 'Error creating OTP' });
